@@ -1,0 +1,15 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports: ["6333:6333", "6334:6334"]
+    volumes: ["./data/qdrant-server:/qdrant/storage"]
+
+  n8n:
+    image: n8nio/n8n:latest
+    ports: ["5678:5678"]
+    environment:
+      - N8N_SECURE_COOKIE=false
+    volumes: ["./data/n8n:/home/node/.n8n"]
+
+# Devices and gateway run from the host venv for now (Laya/torch are large);
+# containerise them on Mon for the one-command judge run.
