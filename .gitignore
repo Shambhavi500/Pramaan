@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Pre-downloaded model weights and runtime shard data stay local.
+models/
+data/
+
+node_modules/
+dist/
+.env
