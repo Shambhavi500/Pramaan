@@ -69,7 +69,8 @@ export default function ReviewClient({ initialItems }: { initialItems: ReviewIte
 
   const noticeEl = notice && (
     <p
-      className={`text-xs ${notice.tone === "ok" ? "text-emerald-700" : notice.tone === "warn" ? "text-amber-700" : "text-red-700"}`}
+      role="status"
+      className={`text-xs ${notice.tone === "ok" ? "text-good" : notice.tone === "warn" ? "text-warn" : "text-bad"}`}
     >
       {notice.text}
     </p>
@@ -77,9 +78,9 @@ export default function ReviewClient({ initialItems }: { initialItems: ReviewIte
 
   if (!item) {
     return (
-      <div className="p-16 text-center max-w-md mx-auto space-y-3">
-        <h2 className="text-xl font-bold">Review Queue Cleared</h2>
-        <p className="text-sm text-muted-foreground">No flagged or needs-review evidence is waiting.</p>
+      <div className="mx-auto max-w-md space-y-3 py-16 text-center">
+        <h2 className="text-3xl font-light">Review queue cleared</h2>
+        <p className="text-sm text-soft">No flagged or needs-review evidence is waiting.</p>
         {noticeEl}
       </div>
     );
@@ -88,41 +89,35 @@ export default function ReviewClient({ initialItems }: { initialItems: ReviewIte
   const hard = item.status === "flagged";
 
   return (
-    <div className="max-w-2xl mx-auto p-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold">Evidence Moderation Queue</h1>
-          <p className="text-sm text-muted-foreground">{queue.length} items requiring review</p>
+    <div className="mx-auto max-w-2xl space-y-6">
+      <div className="flex items-end justify-between gap-4">
+        <div className="space-y-2">
+          <span className="chip-lime">Moderation</span>
+          <h1 className="text-4xl font-light tracking-tight">Review queue</h1>
+          <p className="text-sm text-soft">{queue.length} items waiting · V verifies, R rejects</p>
         </div>
-        <span
-          className={`px-3 py-1 text-xs font-bold rounded-full flex items-center gap-1 ${hard ? "bg-red-100 text-red-800" : "bg-amber-100 text-amber-800"}`}
-        >
-          <ShieldAlert className="h-3.5 w-3.5" /> {hard ? "FLAGGED" : "NEEDS REVIEW"}
+        <span className={`chip flex items-center gap-1 ${hard ? "bg-bad text-lime-ink" : "bg-warn text-lime-ink"}`}>
+          <ShieldAlert className="h-3.5 w-3.5" aria-hidden /> {hard ? "Flagged" : "Needs review"}
         </span>
       </div>
 
       {noticeEl}
 
-      <div className="border rounded-2xl overflow-hidden bg-white shadow-sm">
+      <div className="panel overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={item.imageUrl} alt="Review item" className="w-full h-80 object-cover" />
-        <div className="p-5 space-y-3">
-          <div className="flex justify-between items-center">
-            <span className="text-xs font-mono text-muted-foreground">{item.id}</span>
-            <span className={`text-lg font-bold ${hard ? "text-red-600" : "text-amber-600"}`}>
-              Trust: {item.score} / 100
-            </span>
+        <img src={item.imageUrl} alt="Evidence under review" className="h-80 w-full object-cover" />
+        <div className="space-y-3 p-5">
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-xs text-muted">{item.id}</span>
+            <span className={`text-2xl font-light ${hard ? "text-bad" : "text-warn"}`}>Trust {item.score} / 100</span>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-soft">
             Claimed: {item.activity.replace(/_/g, " ")} · Phase: {item.phase} · Geo: {item.geoStatus ?? "unknown"}
           </p>
-          {item.caption && <p className="text-xs italic text-neutral-600">AI: {item.caption}</p>}
+          {item.caption && <p className="text-xs italic text-white/70">AI: {item.caption}</p>}
           {item.reasons.map((r) => (
-            <div
-              key={r}
-              className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-900 flex items-start gap-2"
-            >
-              <AlertTriangle className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
+            <div key={r} className="flex items-start gap-2 rounded-lg border border-bad/40 bg-bad/10 p-3 text-xs text-white/90">
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-bad" aria-hidden />
               <span>{r}</span>
             </div>
           ))}
@@ -133,24 +128,17 @@ export default function ReviewClient({ initialItems }: { initialItems: ReviewIte
         value={reason}
         onChange={(e) => setReason(e.target.value)}
         maxLength={500}
+        aria-label="Reason for the decision"
         placeholder="Reason for the decision (optional, kept in the audit ledger)"
-        className="w-full border rounded-xl bg-white px-3 py-2 text-sm"
+        className="field"
       />
 
       <div className="grid grid-cols-2 gap-4">
-        <button
-          disabled={pending}
-          onClick={() => decide("rejected")}
-          className="py-3 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center justify-center gap-2"
-        >
-          <X className="h-5 w-5" /> Reject (R)
+        <button disabled={pending} onClick={() => decide("rejected")} className="btn-danger py-3">
+          <X className="h-5 w-5" aria-hidden /> Reject (R)
         </button>
-        <button
-          disabled={pending}
-          onClick={() => decide("verified")}
-          className="py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center justify-center gap-2"
-        >
-          <Check className="h-5 w-5" /> Override & Verify (V)
+        <button disabled={pending} onClick={() => decide("verified")} className="btn-lime py-3">
+          <Check className="h-5 w-5" aria-hidden /> Verify (V)
         </button>
       </div>
     </div>

@@ -100,23 +100,24 @@ export default function CapturePage() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 space-y-6">
-      <div className="border-b pb-3">
-        <h1 className="text-xl font-bold flex items-center gap-2">
-          <Camera className="h-5 w-5 text-emerald-600" /> Pramaan Field Capture
+    <div className="mx-auto max-w-md space-y-6 pb-4">
+      <div className="space-y-2">
+        <span className="chip-lime">Field capture</span>
+        <h1 className="flex items-center gap-2 text-4xl font-light tracking-tight">
+          <Camera className="h-7 w-7 text-lime" aria-hidden /> Capture evidence
         </h1>
-        <p className="text-xs text-muted-foreground">Site GA-17 · Kotra Check Dam</p>
+        <p className="text-sm text-soft">Site GA-17 · Kotra Check Dam</p>
       </div>
 
-      <label className="border-2 border-dashed rounded-2xl h-64 flex flex-col items-center justify-center cursor-pointer bg-neutral-50 overflow-hidden relative">
+      <label className="panel relative flex h-64 cursor-pointer flex-col items-center justify-center overflow-hidden border-dashed">
         {preview ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={preview} alt="Capture preview" className="h-full w-full object-cover" />
         ) : (
-          <div className="text-center p-4">
-            <Camera className="h-10 w-10 mx-auto text-muted-foreground mb-2" />
-            <p className="text-sm font-semibold">Tap to capture field evidence</p>
-            <p className="text-xs text-muted-foreground">Camera with hardware geotagging</p>
+          <div className="p-4 text-center">
+            <Camera className="mx-auto mb-2 h-10 w-10 text-link" aria-hidden />
+            <p className="text-base font-normal">Tap to capture field evidence</p>
+            <p className="text-xs text-muted">Camera with hardware geotagging</p>
           </div>
         )}
         <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFileChange} />
@@ -124,12 +125,12 @@ export default function CapturePage() {
 
       <div className="grid grid-cols-2 gap-3 text-xs">
         <label className="space-y-1">
-          <span className="font-semibold">Activity</span>
+          <span className="font-medium text-soft">Activity</span>
           <select
             value={activity}
             onChange={(e) => setActivity(e.target.value as Activity)}
             disabled={uploading}
-            className="w-full border rounded-lg bg-white px-2 py-2"
+            className="field"
           >
             {ACTIVITIES.map((a) => (
               <option key={a.value} value={a.value}>
@@ -139,12 +140,12 @@ export default function CapturePage() {
           </select>
         </label>
         <label className="space-y-1">
-          <span className="font-semibold">Phase</span>
+          <span className="font-medium text-soft">Phase</span>
           <select
             value={phase}
             onChange={(e) => setPhase(e.target.value as Phase)}
             disabled={uploading}
-            className="w-full border rounded-lg bg-white px-2 py-2"
+            className="field"
           >
             {PHASES.map((p) => (
               <option key={p.value} value={p.value}>
@@ -156,14 +157,14 @@ export default function CapturePage() {
       </div>
 
       {sha256 && (
-        <div className="bg-neutral-100 p-3 rounded-lg space-y-2 text-xs">
+        <div className="panel-flat space-y-2 p-3 text-xs">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
-            <span className="font-mono truncate">SHA-256: {sha256}</span>
+            <ShieldCheck className="h-4 w-4 shrink-0 text-good" aria-hidden />
+            <span className="truncate font-mono">SHA-256: {sha256}</span>
           </div>
           {gps && (
             <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-blue-600" />
+              <MapPin className="h-4 w-4 text-link" aria-hidden />
               <span>
                 GPS: {gps.lat.toFixed(4)}°N, {gps.lng.toFixed(4)}°E (±{Math.round(gps.acc)}m)
               </span>
@@ -172,15 +173,15 @@ export default function CapturePage() {
         </div>
       )}
 
-      {status && <p className="text-xs text-center font-medium text-emerald-700">{status}</p>}
+      {status && (
+        <p role="status" className={`text-center text-xs font-medium ${status.startsWith("Error") ? "text-bad" : "text-lime"}`}>
+          {status}
+        </p>
+      )}
 
-      <button
-        disabled={!file || !sha256 || uploading}
-        onClick={handleUpload}
-        className="w-full bg-emerald-600 text-white font-semibold py-3 rounded-xl disabled:opacity-50 flex items-center justify-center gap-2"
-      >
-        {uploading ? <RefreshCw className="h-5 w-5 animate-spin" /> : <UploadCloud className="h-5 w-5" />}
-        {uploading ? "Verifying with Cloudinary..." : "Submit Proof"}
+      <button disabled={!file || !sha256 || uploading} onClick={handleUpload} className="btn-lime w-full py-3">
+        {uploading ? <RefreshCw className="h-5 w-5 animate-spin" aria-hidden /> : <UploadCloud className="h-5 w-5" aria-hidden />}
+        {uploading ? "Verifying with Cloudinary..." : "Submit proof"}
       </button>
     </div>
   );

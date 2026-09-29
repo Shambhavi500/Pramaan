@@ -29,9 +29,9 @@ export default async function ComparePage({ params }: { params: Promise<{ pairId
 
   if (!pair || !pair.before || !pair.after) {
     return (
-      <div className="p-16 text-center max-w-md mx-auto">
-        <h2 className="text-xl font-bold">No before/after pairs yet</h2>
-        <p className="text-sm text-muted-foreground mt-1">Run the seed script or approve a suggested pair.</p>
+      <div className="mx-auto max-w-md py-16 text-center">
+        <h2 className="text-2xl font-light">No before/after pairs yet</h2>
+        <p className="mt-2 text-sm text-soft">Run the seed script or approve a suggested pair.</p>
       </div>
     );
   }

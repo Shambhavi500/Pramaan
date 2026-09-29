@@ -14,29 +14,30 @@ interface Props {
 
 export default function CompareClient({ title, subtitle, notice, exgDelta, beforeUrl, afterUrl }: Props) {
   return (
-    <div className="flex flex-col gap-6 max-w-5xl mx-auto p-6">
-      <div className="flex justify-between items-center flex-wrap gap-3">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Before & After Change Verification</h1>
-          <p className="text-sm text-muted-foreground">
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="space-y-2">
+          <span className="chip-cyan">Change verification</span>
+          <h1 className="text-4xl font-light tracking-tight">Before &amp; after</h1>
+          <p className="text-sm text-soft">
             {title} · {subtitle}
           </p>
         </div>
         {exgDelta !== null && (
-          <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-2 rounded-lg text-sm font-semibold">
+          <div className="panel-flat px-4 py-2 text-sm font-medium text-good">
             Vegetation index Δ (ExG): {exgDelta >= 0 ? "+" : ""}
             {exgDelta.toFixed(3)}
           </div>
         )}
       </div>
 
-      {notice && <p className="text-xs text-amber-700">{notice}</p>}
+      {notice && <p className="text-xs text-warn">{notice}</p>}
 
-      <div className="h-[550px] w-full rounded-2xl overflow-hidden border shadow-sm">
+      <div className="panel h-[min(70vh,550px)] w-full overflow-hidden p-1">
         <ReactCompareSlider
           itemOne={<ReactCompareSliderImage src={beforeUrl} alt="Before" />}
           itemTwo={<ReactCompareSliderImage src={afterUrl} alt="After" />}
-          className="h-full w-full"
+          className="h-full w-full rounded-lg"
         />
       </div>
     </div>

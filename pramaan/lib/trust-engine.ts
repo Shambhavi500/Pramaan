@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/db";
 import { phashHexToSignedBigInt } from "@/lib/phash";
 import { extractGps, type GpsFix } from "@/lib/geo";
+import { finalizeTrust } from "@/lib/trust-scoring";
 
 const GEOFENCE_TOLERANCE_M = 150;
 
@@ -154,17 +155,7 @@ export async function computeTrustScore(
   // Q1: Image quality & focus
   signals.push({ id: "Q1", name: "Focus & Quality", score: tags.includes("blurry") ? 0.3 : 1.0, weight: 6 });
 
-  const totalWeight = signals.reduce((acc, s) => acc + s.weight, 0);
-  const weightedScore = signals.reduce((acc, s) => acc + s.score * s.weight, 0);
-  let finalScore = Math.round((weightedScore / totalWeight) * 100);
-
-  // Hard caps
-  if (!hasGps && finalScore > 79) finalScore = 79;
-  if (hardFlag && finalScore > 40) finalScore = 40;
-
-  let status: TrustResult["status"] = "needs_review";
-  if (finalScore >= 80) status = "verified";
-  else if (finalScore < 50) status = "flagged";
+  const { score: finalScore, status } = finalizeTrust(signals, { hasExifGps: hasGps, hardFlag });
 
   return { score: finalScore, status, signals, geo, gps };
 }
