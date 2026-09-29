@@ -1,4 +1,6 @@
-# Cloudinary Challenge Research: Code Cubicle 6.0 (PS-02)
+# Research: Cloudinary Challenge, Code Cubicle 6.0 (PS-02)
+
+> The prototype these documents led to lives in the [repository root](../README.md).
 
 > Deep research and a solution design for **Problem Statement 02 · Cloudinary: AI-Powered Impact & Sustainability Media Platform**, compiled 29 Sep 2026.
 > Proposed product: **Pramaan** (प्रमाण, "proof"): *from field photo to verified impact, every pixel traceable.*

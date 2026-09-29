@@ -4,7 +4,7 @@
     {
       "name": "pramaan",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "pramaan", "run", "dev"],
+      "runtimeArgs": ["run", "dev"],
       "port": 3000
     }
   ]
