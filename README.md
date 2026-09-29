@@ -1,72 +1,77 @@
-# Smriti
+# Cloudinary Challenge Research: Code Cubicle 6.0 (PS-02)
 
-> Qdrant Edge gave devices a memory. Smriti gives that memory judgment: what to remember,
-> what to share, and what to believe, even with no internet.
+> Deep research and a solution design for **Problem Statement 02 · Cloudinary: AI-Powered Impact & Sustainability Media Platform**, compiled 29 Sep 2026.
+> Proposed product: **Pramaan** (प्रमाण, "proof"): *from field photo to verified impact, every pixel traceable.*
 
-Code Cubicle 6.0 · PS3 (Qdrant Edge). A memory control plane for a factory-maintenance
-copilot: technicians' devices work fully offline, decide on-device what may leave, and
-resolve conflicting facts deterministically when they reconnect.
+**Start here → [`00_EXECUTIVE_SUMMARY.md`](00_EXECUTIVE_SUMMARY.md)** (one page: deadlines, what Cloudinary wants, root cause, solution, first actions).
 
-## Status
+> ⏰ **HackCulture Project Submission closes Wed 30 Sep 2026, 23:59 IST.** See `01_hackathon/01_event_brief.md`.
 
-| Piece | State |
+---
+
+## Folder map & reading order
+
+### 01 · The hackathon
+| File | What's inside |
 |---|---|
-| Three Qdrant Edge shards per device (private / mutable / mirror) | ✅ |
-| Dense (FastEmbed bge-small) + sparse (Edge-native BM25 + IDF), hybrid RRF | ✅ |
-| Laya on-device decisions (residency, criticality) + heuristic fallback | ✅ |
-| Guardrails: PII regex hard gate, dedup against mirror | ✅ |
-| Resolver: HLC, version vectors, supersede / contested, time travel | ✅ 11 unit tests |
-| Device API (FastAPI) + online/offline switch | ✅ |
-| SQLite outbox, `/sync` gateway, mirror pull | ⏳ Sat |
-| n8n alert, Ollama answers, dashboard, bench | ⏳ |
+| [`01_hackathon/01_event_brief.md`](01_hackathon/01_event_brief.md) | Timeline & deadlines, prizes (and discrepancies), Cloudinary's official requirements, the submission form field-by-field, rules, open questions |
+| [`01_hackathon/02_problem_statement.md`](01_hackathon/02_problem_statement.md) | Verbatim PS (transcribed from the PDF image), close reading, requirements matrix R1–R6 with acceptance criteria, implicit requirements, minimal vs. winning answer |
+| [`01_hackathon/03_judging_and_what_cloudinary_wants.md`](01_hackathon/03_judging_and_what_cloudinary_wants.md) | Evidence-based judging model (info session, Jen Looper's playbook, HackIndia rules, form), Cloudinary's motives, inferred rubric, judge Q&A, anti-patterns, self-audit |
+| [`01_hackathon/04_past_winners_analysis.md`](01_hackathon/04_past_winners_analysis.md) | OperaAI, StudyO, StudyStudio and others: what won and why; positioning conclusions |
 
-## Run
+### 02 · Cloudinary: platform research
+| File | What's inside |
+|---|---|
+| [`02_cloudinary/01_platform_overview.md`](02_cloudinary/01_platform_overview.md) | Products (Image, Video, Assets, MediaFlows, Moderation), mental model, core concepts, URL anatomy, 2025–26 strategic direction |
+| [`02_cloudinary/02_capability_catalog.md`](02_cloudinary/02_capability_catalog.md) | Exhaustive capability catalog by lifecycle stage with exact syntax, PS mapping and Free-plan availability |
+| [`02_cloudinary/03_ai_and_analysis_stack.md`](02_cloudinary/03_ai_and_analysis_stack.md) | Analyze API, AI Vision (JSON schema), Content Analysis, native analysis, video AI chain, Moderation, Duplicate Detection, gaps we must build, "compose then perceive" |
+| [`02_cloudinary/04_latest_launches_2025_2026.md`](02_cloudinary/04_latest_launches_2025_2026.md) | Dated timeline of every relevant launch (May 2025 → Sep 2026), relevance ratings, deprecations/gotchas |
+| [`02_cloudinary/05_developer_ai_tooling.md`](02_cloudinary/05_developer_ai_tooling.md) | Starter Kits (inspected), Skills Pack contents, MCP servers + tool inventories, AI Power Start stages, recommended setup |
+| [`02_cloudinary/06_plans_limits_costs.md`](02_cloudinary/06_plans_limits_costs.md) | Free-plan limits, transformation-cost rules, add-on quotas, **hackathon credit budget**, guardrails, non-Cloudinary costs |
+| [`02_cloudinary/07_availability_matrix.md`](02_cloudinary/07_availability_matrix.md) | Free / add-on / beta / on-request / Enterprise status for every capability in the design, with fallbacks + support tickets to file |
 
-```bash
-python -m venv .venv && .venv/Scripts/pip install -r requirements.txt   # Python 3.11–3.14
-python scripts/download_models.py        # once, online. Then the network is never used.
-python -m pytest                         # 19 tests, fully offline
-SMRITI_DEVICE_ID=tech-A uvicorn device.app:app --port 8001
-```
+### 03 · The problem, to the root
+| File | What's inside |
+|---|---|
+| [`03_problem_deep_dive/01_root_cause_analysis.md`](03_problem_deep_dive/01_root_cause_analysis.md) | Five Whys → root cause ("field media has no evidence chain"), trust-gap model, 8 sub-problems, why now, design principles |
+| [`03_problem_deep_dive/02_stakeholders_and_personas.md`](03_problem_deep_dive/02_stakeholders_and_personas.md) | Stakeholder map, 7 personas with JTBD, today-vs-future journey, interview script |
+| [`03_problem_deep_dive/03_india_and_global_evidence.md`](03_problem_deep_dive/03_india_and_global_evidence.md) | NMMS/MGNREGA fraud data, GeoMGNREGA before-during-after, CSR Rule 8(3) & spend, DPDP, carbon-credit credibility, reporting burden, pitch one-liners |
+| [`03_problem_deep_dive/04_existing_solutions_and_gaps.md`](03_problem_deep_dive/04_existing_solutions_and_gaps.md) | Landscape (ODK/Kobo, govt apps, ProofMode/Truepic, DAMs, M&E, story tools), the gap, positioning, integrations, moat |
 
-```bash
-curl -X POST localhost:8001/remember -H 'content-type: application/json' \
-     -d '{"text": "CNC-07 bearing replaced, vibration normal"}'
-curl "localhost:8001/recall?q=is CNC-07 vibrating&mode=hybrid"
-curl "localhost:8001/entity/machine:CNC-07/status/history?at=<epoch_ms>"
-```
+### 04 · The solution: Pramaan
+| File | What's inside |
+|---|---|
+| [`04_solution/01_solution_concept.md`](04_solution/01_solution_concept.md) | Concept, one-liners, 7 pillars mapped to PS goals, wow moments, differentiation, scope tiers, success metrics |
+| [`04_solution/02_feature_spec.md`](04_solution/02_feature_spec.md) | Screen-by-screen spec (capture, import, evidence, review, dashboard, search, compare, studio, verify, admin, copilot), NFRs |
+| [`04_solution/03_system_architecture.md`](04_solution/03_system_architecture.md) | Component diagram, ingest & story sequences, async jobs, webhook handling, security, scaling, deployment |
+| [`04_solution/04_cloudinary_integration_blueprint.md`](04_solution/04_cloudinary_integration_blueprint.md) | **26-row integration map**, account settings, SMD schema, presets + `eval` gate, named transformations, code sketches, URL recipes, player, MediaFlows, MCP setup prompts |
+| [`04_solution/05_ai_pipeline_design.md`](04_solution/05_ai_pipeline_design.md) | Perception vs. reasoning split, AI Vision prompt, **Trust Score algorithm**, pHash index, evaluation plan, Claude planner/report/Copilot, embeddings, safety |
+| [`04_solution/06_data_model.md`](04_solution/06_data_model.md) | Cloudinary conventions, ER diagram, full Postgres DDL, field ownership, RLS |
+| [`04_solution/07_evidence_integrity_and_traceability.md`](04_solution/07_evidence_integrity_and_traceability.md) | Immutable originals, derivative classifier, **generative firewall**, hash-chained ledger, verify page + QR, C2PA plan, consent/redaction |
+| [`04_solution/08_before_after_engine.md`](04_solution/08_before_after_engine.md) | Pairing algorithm, repeat-photography ghost overlay, 6 presentation formats, AI-on-composite, ExG metric |
+| [`04_solution/09_search_and_discovery.md`](04_solution/09_search_and_discovery.md) | Hybrid search (Cloudinary Search + PostGIS + pgvector), planner→compiler, fusion, "why matched", eval |
+| [`04_solution/10_impact_story_studio.md`](04_solution/10_impact_story_studio.md) | Templates, evidence selection, cited generation, Cloudinary rendering (cards, PDF, social, reels, pages), impact & coverage metrics |
+| [`04_solution/11_tech_stack.md`](04_solution/11_tech_stack.md) | Stack with rationale & alternatives, Claude API specifics, repo layout, env vars, "why not X" |
+| [`04_solution/12_privacy_safety_ethics.md`](04_solution/12_privacy_safety_ethics.md) | Principles, DPDP alignment, redaction matrix, AI ethics, fraud-detection ethics, security checklist, responsible GenAI |
 
-Env: `SMRITI_DEVICE_ID`, `SMRITI_DATA_DIR`, `SMRITI_DECIDER=laya|heuristic`, `SMRITI_OFFLINE=1`.
+### 05 · Execution
+| File | What's inside |
+|---|---|
+| [`05_execution/01_build_plan.md`](05_execution/01_build_plan.md) | Roles, Gantt, day-by-day plan (29 Sep → 11 Oct), scope-cut ladder, definition of done |
+| [`05_execution/02_repo_setup.md`](05_execution/02_repo_setup.md) | Exact commands: starter kit, skills, Power Start, MCP config, deps, env, config-as-code, DB, deploy, first MCP prompts, repo hygiene |
+| [`05_execution/03_demo_and_pitch.md`](05_execution/03_demo_and_pitch.md) | Word-for-word 3-min pitch, 5-min variant, slide outline, demo data, video recording, Q&A bank |
+| [`05_execution/04_submission_checklist.md`](05_execution/04_submission_checklist.md) | HackCulture checklist, **draft answers for every Cloudinary form field**, README template, LinkedIn template, finals checklist |
+| [`05_execution/05_risks_and_mitigations.md`](05_execution/05_risks_and_mitigations.md) | 20 risks with likelihood/impact/mitigation/owner |
+| [`05_execution/06_prompt_log_template.md`](05_execution/06_prompt_log_template.md) | `PROMPTS.md` format and seed entries (the form asks for prompts used) |
 
-## Layout
+### 06 · References
+| File | What's inside |
+|---|---|
+| [`06_references/sources.md`](06_references/sources.md) | Every source consulted, grouped; items that couldn't be verified publicly |
 
-```
-device/   config · embed · shards (Qdrant Edge) · decide (Laya) · guard · resolver · memory · app
-gateway/  sync gateway (skeleton; imports device.resolver so both sides run identical code)
-scripts/  download_models.py
-tests/    resolver (pure) + memory (real Edge shards and embeddings)
-```
+---
 
-## What we built on Qdrant Edge (qdrant-edge-py 0.8.0)
-
-- `EdgeShard.create/load`, named `dense` + sparse `bm25` vectors (`Modifier.Idf`), keyword
-  payload indexes on `entity_key`, `status`, `kind`, `device_id`.
-- Hybrid search inside a shard: two `Prefetch` stages + `Fusion.Rrf`, filtered with
-  `must_not status=superseded`. Superseded facts are hidden, never deleted.
-- `Bm25` embedder is built into Edge, so no sparse model download.
-- `set_payload` to move facts between current / superseded / contested; `scroll` for entity history.
-
-## Findings (measured on a laptop CPU, 2026-09-26)
-
-- **Edge 0.8.0 loses unflushed writes on a hard kill.** 5 upserts then `os._exit` → 0 points
-  on reload; with `flush()` → 5. We flush after every write (p50 15 ms, p95 21 ms) and
-  test it (`test_write_survives_hard_kill`).
-- **Cross-shard RRF must not re-fuse per-shard RRF lists.** Every shard's top hit gets
-  1/(k+1) however weak it is, so an unrelated private note tied the right answer. We merge
-  each modality globally by raw score, then fuse (`test_weak_hit_in_another_shard_...`).
-- Offline recall, warm: ~5 ms embed + ~1 ms search across 3 shards.
-- Laya on CPU: ~800 ms per decision warm (first load downloads weights). Residency was right
-  on all demo notes (PII → private p=0.68, machine fact → sync, chit-chat → drop); criticality
-  is weak zero-shot (a coolant leak on a walkway scored "important", not "safety-critical").
-  Guardrails and the resolver have the final word.
-- `EdgeShard.create` requires the directory to exist; `retrieve` needs `with_vector` positionally.
+## Method
+- **Primary sources:** HackCulture page (rendered in a browser, incl. FAQs), the PS PDF (a single image, transcribed), Cloudinary's hackathon page and submission form, Cloudinary docs as markdown (~60 pages), release-note RSS feeds (2024–2026), npm tarballs of both starter kits, the `cloudinary-devs/skills` and `create-cloudinary-next-template` repos, and the MCP/SDK npm packages (tool inventories).
+- **Secondary sources:** past-winner write-ups (Devpost), Cloudinary DevRel articles, Indian government/CSR/DPDP coverage, global impact-credibility investigations.
+- **Verification:** claims about Cloudinary features cite their docs; availability (Free/beta/Enterprise) was checked per feature. Items that could not be verified are listed in `06_references/sources.md` §H. Syntax that should be tested live is marked **(verify)**.

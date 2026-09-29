@@ -1,9 +1,0 @@
-[project]
-name = "smriti"
-version = "0.1.0"
-requires-python = ">=3.11"
-
-[tool.pytest.ini_options]
-pythonpath = ["."]
-testpaths = ["tests"]
-markers = ["models: needs downloaded embedding models (run scripts/download_models.py)"]
