@@ -5,6 +5,8 @@ import { computeTrustScore } from "@/lib/trust-engine";
 import { appendLedgerEntry } from "@/lib/ledger";
 import { phashHexToSignedBigInt } from "@/lib/phash";
 import { resolveContextFromFolder } from "@/lib/org";
+import { extractGps } from "@/lib/geo";
+import { parseActivity, parsePhase } from "@/lib/activities";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -56,11 +58,9 @@ export const EVIDENCE_SCHEMA = {
   additionalProperties: false,
 };
 
-const CLAIMED_ACTIVITY = "check_dam_construction";
-
 /** Used only when AI Vision is unavailable. The result is marked so it is never mistaken for a real analysis. */
-const FALLBACK_VISION = {
-  activity: CLAIMED_ACTIVITY,
+const fallbackVision = (claimedActivity: string) => ({
+  activity: claimedActivity,
   activity_matches_claim: "uncertain",
   visible_counts: { saplings: 0, structures: 0, people: 0 },
   people: { present: false, minors_likely: false },
@@ -72,12 +72,12 @@ const FALLBACK_VISION = {
   setting: "rural_field",
   scene_summary: "AI Vision unavailable at ingest time; pending manual or retried analysis.",
   fallback: true,
-};
+});
 
-async function runVision(analysisUrl: string): Promise<any> {
+async function runVision(analysisUrl: string, claimedActivity: string): Promise<any> {
   try {
     const prompt =
-      `Analyze this development project field photo against the claimed activity "${CLAIMED_ACTIVITY}". ` +
+      `Analyze this development project field photo against the claimed activity "${claimedActivity}". ` +
       `Return ONLY JSON matching this JSON schema:\n` +
       JSON.stringify(EVIDENCE_SCHEMA);
     const res: any = await getAnalysisClient().analyze.aiVisionGeneral({
@@ -90,7 +90,7 @@ async function runVision(analysisUrl: string): Promise<any> {
     return typeof text === "string" ? JSON.parse(text) : text;
   } catch (err) {
     console.error("AI Vision failed, using flagged fallback:", err);
-    return FALLBACK_VISION;
+    return fallbackVision(claimedActivity);
   }
 }
 
@@ -105,13 +105,19 @@ export async function analyzeImageJob(payload: any) {
     secure: true,
   });
 
-  const visionData = await runVision(analysisUrl);
-  const trustResult = await computeTrustScore(payload, visionData, evidenceId);
+  // Claimed activity and phase come from the capture form via upload context (validated against the allowlist).
+  const custom = payload.context?.custom ?? {};
+  const claimedActivity = parseActivity(custom.activity);
+  const phase = parsePhase(custom.phase);
+
   const ctx = await resolveContextFromFolder(publicId);
   if (!ctx) throw new Error(`No org found for ${publicId}; run "npm run seed" first.`);
 
+  const visionData = await runVision(analysisUrl, claimedActivity);
+  const trustResult = await computeTrustScore(payload, visionData, { selfEvidenceId: evidenceId, siteId: ctx.siteId });
+  const gps = trustResult.gps ?? extractGps(payload);
+
   const phash = payload.phash ? phashHexToSignedBigInt(payload.phash) : null;
-  const custom = payload.context?.custom ?? {};
   const people: string[] = visionData.people?.minors_likely
     ? ["has_people", "minors_likely"]
     : visionData.people?.present
@@ -136,9 +142,11 @@ export async function analyzeImageJob(payload: any) {
     exif_time: custom.exif_time ? safeDate(custom.exif_time) : null,
     device: custom.device || null,
     software: custom.software || null,
-    geo_status: (payload.tags || []).includes("no_gps") ? "no_gps" : "inferred",
-    phase: "after",
-    activity_claimed: CLAIMED_ACTIVITY,
+    gps: gps ? `SRID=4326;POINT(${gps.lng} ${gps.lat})` : null,
+    gps_accuracy_m: gps?.accuracyM ?? null,
+    geo_status: trustResult.geo.status,
+    phase,
+    activity_claimed: claimedActivity,
     phash,
     trust_score: trustResult.score,
     trust_status: trustResult.status,
@@ -164,6 +172,10 @@ export async function analyzeImageJob(payload: any) {
       score: trustResult.score,
       status: trustResult.status,
       activity: visionData.activity,
+      claimed_activity: claimedActivity,
+      phase,
+      geo_status: trustResult.geo.status,
+      geo_distance_m: trustResult.geo.distanceM,
       ai_vision_fallback: Boolean(visionData.fallback),
     },
     actor: "cld_ai_vision",

@@ -50,6 +50,11 @@ async function seed() {
           district: "Udaipur",
           state: "Rajasthan",
           setting: "rural_field",
+          // Placeholder coordinates near Kotra, Udaipur: replace with the real surveyed site.
+          center: "SRID=4326;POINT(73.4386 24.2189)",
+          radius_m: 150,
+          geofence:
+            "SRID=4326;POLYGON((73.4376 24.2180, 73.4396 24.2180, 73.4396 24.2198, 73.4376 24.2198, 73.4376 24.2180))",
         },
         { onConflict: "project_id,code" }
       )
@@ -98,6 +103,19 @@ async function seed() {
     { onConflict: "id" }
   );
   if (ev.error) throw new Error(`evidence: ${ev.error.message}`);
+
+  const pair = await supabase.from("pair").upsert(
+    {
+      id: "pair_01",
+      site_id: site.id,
+      before_id: "ev_01J9Z6Q2",
+      after_id: "ev_01J9Z6Q3",
+      candidate_score: 0.9,
+      status: "approved",
+    },
+    { onConflict: "id" }
+  );
+  if (pair.error) throw new Error(`pair: ${pair.error.message}`);
 
   const dv = await supabase.from("derivative").upsert(
     {

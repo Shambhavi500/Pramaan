@@ -1,5 +1,8 @@
 import { supabase } from "@/lib/db";
 import { phashHexToSignedBigInt } from "@/lib/phash";
+import { extractGps, type GpsFix } from "@/lib/geo";
+
+const GEOFENCE_TOLERANCE_M = 150;
 
 export interface TrustSignal {
   id: string;
@@ -10,17 +13,29 @@ export interface TrustSignal {
   reason?: string;
 }
 
+export interface GeoAssessment {
+  status: "in_geofence" | "outside_geofence" | "no_gps" | "inferred";
+  distanceM: number | null;
+}
+
 export interface TrustResult {
   score: number;
   status: "verified" | "needs_review" | "flagged";
   signals: TrustSignal[];
+  geo: GeoAssessment;
+  gps: GpsFix | null;
+}
+
+export interface TrustOptions {
+  selfEvidenceId?: string;
+  siteId?: string | null;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function computeTrustScore(
   uploadPayload: any,
   vision: any,
-  selfEvidenceId?: string
+  { selfEvidenceId, siteId }: TrustOptions = {}
 ): Promise<TrustResult> {
   const signals: TrustSignal[] = [];
   let hardFlag = false;
@@ -36,9 +51,41 @@ export async function computeTrustScore(
   const hasExifTime = Boolean(md.DateTimeOriginal || md.CreateDate);
   signals.push({ id: "P2", name: "EXIF Timestamp", score: hasExifTime ? 1.0 : 0.0, weight: 5 });
 
-  // P3: GPS presence (tag set by the in-upload eval gate)
+  // P3: Geofence containment. EXIF GPS presence (tag from the eval gate) gates the score cap below;
+  // when a fix and a site are known, PostGIS decides inside / near / outside the site geofence.
   const hasGps = !tags.includes("no_gps");
-  signals.push({ id: "P3", name: "Geofence Containment", score: hasGps ? 1.0 : 0.0, weight: 10 });
+  const gps = extractGps(uploadPayload);
+  let geo: GeoAssessment = { status: gps || hasGps ? "inferred" : "no_gps", distanceM: null };
+  let p3Score = hasGps ? 1.0 : 0.0;
+  let p3Reason: string | undefined = hasGps ? undefined : "No EXIF GPS on the image.";
+
+  if (gps && siteId) {
+    const { data, error } = await supabase.rpc("check_site_geofence", {
+      p_site_id: siteId,
+      p_lng: gps.lng,
+      p_lat: gps.lat,
+    });
+    const row = (Array.isArray(data) ? data[0] : data) as { inside: boolean; distance_m: number } | null;
+    if (error) {
+      console.error("check_site_geofence failed (is the migration applied?):", error.message);
+    } else if (row) {
+      const src = gps.source === "exif" ? "EXIF" : "app-reported";
+      if (row.inside) {
+        p3Score = 1.0;
+        p3Reason = undefined;
+        geo = { status: "in_geofence", distanceM: 0 };
+      } else if (row.distance_m <= GEOFENCE_TOLERANCE_M) {
+        p3Score = 0.7;
+        p3Reason = `${src} GPS is ${Math.round(row.distance_m)} m outside the site geofence (within ${GEOFENCE_TOLERANCE_M} m tolerance).`;
+        geo = { status: "outside_geofence", distanceM: row.distance_m };
+      } else {
+        p3Score = 0.0;
+        p3Reason = `${src} GPS is ${Math.round(row.distance_m)} m outside the site geofence.`;
+        geo = { status: "outside_geofence", distanceM: row.distance_m };
+      }
+    }
+  }
+  signals.push({ id: "P3", name: "Geofence Containment", score: p3Score, weight: 10, reason: p3Reason });
 
   // I1: pHash near-duplicate search (excluding the asset itself, e.g. on webhook redelivery)
   const currentPhash: string | undefined = uploadPayload.phash;
@@ -119,5 +166,5 @@ export async function computeTrustScore(
   if (finalScore >= 80) status = "verified";
   else if (finalScore < 50) status = "flagged";
 
-  return { score: finalScore, status, signals };
+  return { score: finalScore, status, signals, geo, gps };
 }

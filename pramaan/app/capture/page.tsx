@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Camera, MapPin, ShieldCheck, UploadCloud, RefreshCw } from "lucide-react";
+import { ACTIVITIES, PHASES, type Activity, type Phase } from "@/lib/activities";
 
 const FOLDER = "pramaan/green-aravalli/GA-17";
 
@@ -12,6 +13,8 @@ export default function CapturePage() {
   const [sha256, setSha256] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [status, setStatus] = useState<string>("");
+  const [activity, setActivity] = useState<Activity>("check_dam_construction");
+  const [phase, setPhase] = useState<Phase>("before");
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) return;
@@ -50,7 +53,11 @@ export default function CapturePage() {
     try {
       const timestamp = Math.round(Date.now() / 1000);
       // Every parameter sent alongside the file (except api_key) must be part of the signature.
-      const context = `client_sha256=${sha256}`;
+      const contextParts = [`client_sha256=${sha256}`, `activity=${activity}`, `phase=${phase}`];
+      if (gps) {
+        contextParts.push(`gps_lat=${gps.lat.toFixed(6)}`, `gps_lng=${gps.lng.toFixed(6)}`, `gps_acc=${Math.round(gps.acc)}`);
+      }
+      const context = contextParts.join("|");
       const signRes = await fetch("/api/sign-upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -114,6 +121,39 @@ export default function CapturePage() {
         )}
         <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFileChange} />
       </label>
+
+      <div className="grid grid-cols-2 gap-3 text-xs">
+        <label className="space-y-1">
+          <span className="font-semibold">Activity</span>
+          <select
+            value={activity}
+            onChange={(e) => setActivity(e.target.value as Activity)}
+            disabled={uploading}
+            className="w-full border rounded-lg bg-white px-2 py-2"
+          >
+            {ACTIVITIES.map((a) => (
+              <option key={a.value} value={a.value}>
+                {a.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="space-y-1">
+          <span className="font-semibold">Phase</span>
+          <select
+            value={phase}
+            onChange={(e) => setPhase(e.target.value as Phase)}
+            disabled={uploading}
+            className="w-full border rounded-lg bg-white px-2 py-2"
+          >
+            {PHASES.map((p) => (
+              <option key={p.value} value={p.value}>
+                {p.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
 
       {sha256 && (
         <div className="bg-neutral-100 p-3 rounded-lg space-y-2 text-xs">

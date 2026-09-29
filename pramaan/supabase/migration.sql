@@ -162,3 +162,27 @@ language sql stable as $$
   order by 2 asc
   limit 10;
 $$;
+
+-- Site geofence check. Uses the site polygon when present, otherwise center + radius_m.
+-- inside: point is within the geofence. distance_m: metres outside it (0 when inside).
+-- Returns no row when the site has neither a polygon nor a center point.
+create or replace function check_site_geofence(p_site_id uuid, p_lng double precision, p_lat double precision)
+returns table (inside boolean, distance_m double precision, method text)
+language sql stable as $$
+  select
+    case when s.geofence is not null
+      then st_covers(s.geofence, pt.g)
+      else st_dwithin(s.center, pt.g, coalesce(s.radius_m, 100))
+    end as inside,
+    case when s.geofence is not null
+      then st_distance(s.geofence, pt.g)
+      else greatest(0, st_distance(s.center, pt.g) - coalesce(s.radius_m, 100))
+    end as distance_m,
+    case when s.geofence is not null then 'polygon' else 'radius' end as method
+  from site s
+  cross join lateral (
+    select st_setsrid(st_makepoint(p_lng, p_lat), 4326)::geography as g
+  ) pt
+  where s.id = p_site_id
+    and (s.geofence is not null or s.center is not null);
+$$;

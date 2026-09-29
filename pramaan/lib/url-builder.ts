@@ -53,3 +53,17 @@ export function buildCompositeUrl(beforePublicId: string, afterPublicId: string)
     secure: true,
   });
 }
+
+/** 1200x900 evidence image for the before/after slider. Faces are pixelated unless consent allows. */
+export function buildPairImageUrl(publicId: string, version: number, consentStatus: string): string {
+  const redact = !(consentStatus === "obtained" || consentStatus === "not_required");
+  return cloudinary.url(publicId, {
+    transformation: [
+      ...(redact ? [{ raw_transformation: "t_public_safe" }] : []),
+      { width: 1200, height: 900, crop: "fill", gravity: "auto" },
+      { fetch_format: "auto", quality: "auto" },
+    ],
+    version,
+    secure: true,
+  });
+}
