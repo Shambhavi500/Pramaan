@@ -43,6 +43,7 @@ jobs:
           CLOUDINARY_API_KEY: placeholder
           CLOUDINARY_API_SECRET: placeholder
           ANTHROPIC_API_KEY: placeholder
+          GEMINI_API_KEY: placeholder
           APP_BASE_URL: http://localhost:3000
           NEXT_TELEMETRY_DISABLED: "1"
 

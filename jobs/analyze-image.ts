@@ -7,6 +7,7 @@ import { phashHexToSignedBigInt } from "@/lib/phash";
 import { resolveContextFromFolder } from "@/lib/org";
 import { extractGps } from "@/lib/geo";
 import { parseActivity, parsePhase } from "@/lib/activities";
+import { generateEvidenceEmbedding } from "@/lib/agents/rag";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -164,6 +165,10 @@ export async function analyzeImageJob(payload: any) {
   });
   if (uErr) throw new Error(`understanding upsert failed: ${uErr.message}`);
 
+  // Semantic index for agentic retrieval. Non-fatal: a missing key or transient failure must not fail ingest
+  // (scripts/backfill-embeddings.ts fills any gaps).
+  await generateEvidenceEmbedding(evidenceId).catch((e) => console.error("embedding failed:", e?.message ?? e));
+
   await appendLedgerEntry({
     subjectType: "evidence",
     subjectId: evidenceId,
@@ -189,7 +194,7 @@ export async function analyzeImageJob(payload: any) {
     ...(trustResult.status === "flagged" ? { moderation: "manual" } : {}),
   }).catch((e) => console.error("DAM sync failed:", e?.message ?? e));
 
-  return { evidenceId, ...trustResult };
+  return { evidenceId, siteId: ctx.siteId, ...trustResult };
 }
 
 function safeDate(v: string): string | null {

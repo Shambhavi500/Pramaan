@@ -10,6 +10,7 @@ import {
   Images,
   LayoutDashboard,
   Search,
+  Sparkles,
   ShieldCheck,
   Target,
   Upload,
@@ -46,6 +47,7 @@ const GROUPS: { label: string; items: NavItem[] }[] = [
     items: [
       { href: "/compare/pair_01", label: "Compare", Icon: GitCompare, match: "/compare" },
       { href: "/discover", label: "Discover", Icon: Search },
+      { href: "/investigate", label: "Investigate", Icon: Sparkles },
       { href: "/claims", label: "Impact", Icon: Target },
       { href: "/stories", label: "Stories", Icon: BookOpen },
     ],

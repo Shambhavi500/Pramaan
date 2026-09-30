@@ -2,6 +2,7 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 import { cloudinary } from "@/lib/cloudinary";
 import { analyzeImageJob } from "@/jobs/analyze-image";
+import { maybeQueueInvestigation } from "@/lib/agents/queue";
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -21,7 +22,9 @@ export async function POST(req: Request) {
 
   if (payload.notification_type === "upload" && payload.resource_type === "image") {
     try {
-      await analyzeImageJob(payload);
+      const result = await analyzeImageJob(payload);
+      // Bulk uploads queue an investigation once enough new evidence has accumulated. Never fails the webhook.
+      if (result.siteId) await maybeQueueInvestigation(result.siteId).catch((e) => console.error("auto-queue failed:", e));
     } catch (err) {
       console.error("analyzeImageJob failed:", err);
       // 500 makes Cloudinary retry the notification.

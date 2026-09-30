@@ -157,6 +157,23 @@ Open <http://localhost:3000>.
 | `POST /api/cloudinary/webhook` | Verified webhook that runs analysis and scoring |
 | `POST /api/search` | Natural-language search: Claude plans, Cloudinary executes |
 | `POST /api/stories` | Cited report from verified evidence, plus PDF pack |
+| `/investigate` | Activity brief, "Generate report" with live progress, human review of held evidence, semantic search |
+| `POST /api/activities/brief` | Saves an activity brief and generates its investigation plan |
+| `POST/GET /api/activities/[siteId]/investigate` | Runs or resumes the agent investigation (SSE); GET returns the latest status |
+| `POST /api/activities/[siteId]/hitl` | Records a human include/exclude decision on held evidence |
+| `POST /api/search/semantic` | Hybrid (pgvector + SQL + Cloudinary) search over one site's evidence |
+| `GET /api/reports/[reportId]` | Fetch a generated report |
+
+## Agent investigation
+
+A LangGraph pipeline in `lib/agents/` with six agents (organize, analyze, identify, compare, discover, report). Deterministic checks (geofence, pHash, EXIF) stay in code; Gemini interprets their results in the context of the activity brief.
+
+- Needs `GEMINI_API_KEY` and migration `20261001000000_pramaan_agents.sql`. Run `npm run backfill:embeddings` for existing evidence.
+- Flagged or reused evidence is held for a human decision and never enters a report without one.
+- Evidence gaps trigger discovery loops, capped at 3 before the report is forced.
+- Every claim cites evidence IDs; uncited claims are dropped. Agent actions are written to the ledger.
+- Bulk uploads (default 10+ new items per site) queue an investigation; start it from `/investigate`.
+- `npm run check:agents` runs offline wiring checks.
 
 ## Project structure
 
