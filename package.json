@@ -11,6 +11,7 @@
     "seed": "tsx --env-file=.env.local scripts/seed.ts",
     "db:verify": "tsx --env-file=.env.local scripts/verify-db.ts",
     "backfill:embeddings": "tsx --env-file=.env.local scripts/backfill-embeddings.ts",
+    "investigate": "tsx --env-file=.env.local scripts/run-investigation.ts",
     "check:agents": "tsx --env-file=.env.local scripts/check-agents.ts",
     "check:demo": "tsx scripts/check-demo-dataset.ts"
   },

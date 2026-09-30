@@ -18,6 +18,32 @@ function model() {
   return chat;
 }
 
+// Free-tier Gemini allows ~5 requests/minute; raise GEMINI_RPM on a paid key.
+const RPM = Math.max(1, Number(process.env.GEMINI_RPM ?? 5));
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+let nextSlot = 0;
+async function throttle() {
+  const at = Math.max(Date.now(), nextSlot);
+  nextSlot = at + Math.ceil(60_000 / RPM) + 250;
+  if (at > Date.now()) await sleep(at - Date.now());
+}
+
+/** Retries rate-limit / overload errors, honouring the "retry in Ns" hint Google returns. */
+async function withRetry<T>(fn: () => Promise<T>): Promise<T> {
+  for (let attempt = 1; ; attempt++) {
+    await throttle();
+    try {
+      return await fn();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      const retryable = /\b(429|503)\b/.test(msg);
+      if (!retryable || attempt >= 4) throw err;
+      const hinted = /retry in ([\d.]+)s/i.exec(msg);
+      await sleep((hinted ? Number(hinted[1]) * 1000 : 30_000) + 1000);
+    }
+  }
+}
+
 /**
  * One structured-output Gemini call. `data` is untrusted evidence/user text and is fenced as data,
  * so captions or briefs cannot instruct the model.

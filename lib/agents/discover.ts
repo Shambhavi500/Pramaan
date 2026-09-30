@@ -83,5 +83,5 @@ export async function discoverAgent(state: InvestigationState): Promise<Investig
     payload: { gaps_searched: gaps.length, evidence_added: found.map((f) => f.evidenceId), loop: state.loopCount + 1 },
   });
 
-  return { discoveredEvidence: found, phaseOverrides: overrides, loopCount: state.loopCount + 1, notes };
+  return { discoveredEvidence: found, phaseOverrides: overrides, loopCount: state.loopCount + 1, lastDiscoveryAdded: found.length, notes };
 }

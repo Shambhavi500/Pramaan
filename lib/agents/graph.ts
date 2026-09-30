@@ -36,6 +36,7 @@ function routeAfterOrganize(s: InvestigationState) {
 
 function routeAfterSynthesis(s: InvestigationState) {
   if (s.loopCount >= MAX_LOOPS) return "max_loops";
+  if (s.lastDiscoveryAdded === 0) return "sufficient"; // last search found nothing new: looping again cannot help
   if (s.evidenceGaps.some((g) => g.severity === "critical")) return "loop";
   return "sufficient";
 }

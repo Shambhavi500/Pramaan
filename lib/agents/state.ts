@@ -99,6 +99,7 @@ export const InvestigationStateAnnotation = Annotation.Root({
   evidenceGaps: Annotation<EvidenceGap[]>({ reducer: replace, default: () => [] }),
 
   loopCount: Annotation<number>({ reducer: replace, default: () => 0 }),
+  lastDiscoveryAdded: Annotation<number>({ reducer: replace, default: () => -1 }), // -1 = discovery has not run yet
   hitlRequests: Annotation<HitlRequest[]>({ reducer: replace, default: () => [] }),
   hitlDecisions: Annotation<Record<string, string>>({ reducer: merge, default: () => ({}) }),
   notes: Annotation<string[]>({ reducer: (a, b) => [...a, ...b], default: () => [] }),

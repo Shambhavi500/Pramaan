@@ -40,6 +40,14 @@ export interface ImpactReport {
 }
 
 const visual = (publicId: string, t: string) => cloudinary.url(publicId, { raw_transformation: t, secure: true, sign_url: true });
+/** Trim to `max` chars at a sentence or word boundary, never mid-word. */
+function clip(text: string, max: number) {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  const sentence = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("."));
+  if (sentence > max * 0.5) return cut.slice(0, sentence + 1);
+  return cut.slice(0, cut.lastIndexOf(" ")).trimEnd() + "…";
+}
 const CAMPAIGN_T = "c_fill,ar_16:9,w_1280/f_auto,q_auto";
 
 /** Agent 6 — terminal agent. Every claim is cited; anything uncited is dropped and gaps/limits are stated plainly. */
@@ -73,7 +81,7 @@ export async function reportAgent(state: InvestigationState): Promise<Investigat
     return ids.length ? { ...c, citedEvidenceIds: ids } : { ...c, citedEvidenceIds: ids, verdict: "insufficient_evidence" as const, confidence: "low" as const };
   });
   const summary = out.executiveSummary.map((s) => ({ text: s.text, evidence_ids: validIds(s.evidenceIds, valid) }));
-  const campaignSummary = out.campaign.summary.slice(0, 280);
+  const campaignSummary = clip(out.campaign.summary, 280);
 
   const keyIds = validIds(out.campaign.keyEvidenceIds, valid).slice(0, 4);
   const byId = new Map(eligible.map((e) => [e.evidenceId, e]));
