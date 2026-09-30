@@ -3,12 +3,13 @@ export const dynamic = "force-dynamic";
 
 import { supabase } from "@/lib/db";
 import { buildPairImageUrl } from "@/lib/url-builder";
+import { EmptyState } from "@/components/ui/PageHeader";
 import CompareClient from "./client";
 
 const PAIR_SELECT =
-  "id, exg_before, exg_after, status, site:site_id(code, name, village, district), " +
-  "before:before_id(id, cld_public_id, cld_version, consent_status, created_at), " +
-  "after:after_id(id, cld_public_id, cld_version, consent_status, created_at)";
+  "id, exg_before, exg_after, candidate_score, status, site:site_id(code, name, village, district), " +
+  "before:before_id(id, cld_public_id, cld_version, consent_status, created_at, trust_score, trust_status), " +
+  "after:after_id(id, cld_public_id, cld_version, consent_status, created_at, trust_score, trust_status)";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default async function ComparePage({ params }: { params: Promise<{ pairId: string }> }) {
@@ -28,12 +29,7 @@ export default async function ComparePage({ params }: { params: Promise<{ pairId
   }
 
   if (!pair || !pair.before || !pair.after) {
-    return (
-      <div className="mx-auto max-w-md py-16 text-center">
-        <h2 className="text-2xl font-light">No before/after pairs yet</h2>
-        <p className="mt-2 text-sm text-soft">Run the seed script or approve a suggested pair.</p>
-      </div>
-    );
+    return <EmptyState title="No before/after pairs yet">Run the seed script or approve a suggested pair.</EmptyState>;
   }
 
   const site = pair.site;
@@ -50,6 +46,10 @@ export default async function ComparePage({ params }: { params: Promise<{ pairId
       subtitle={`${fmt(pair.before.created_at)} vs ${fmt(pair.after.created_at)}${site?.district ? ` · ${site.district}` : ""}`}
       notice={fellBack ? `Pair "${pairId}" was not found; showing ${pair.id} instead.` : null}
       exgDelta={exgDelta}
+      pairId={pair.id}
+      candidateScore={pair.candidate_score === undefined ? null : Number(pair.candidate_score)}
+      before={{ id: pair.before.id, at: pair.before.created_at, score: pair.before.trust_score ?? 0, status: pair.before.trust_status }}
+      after={{ id: pair.after.id, at: pair.after.created_at, score: pair.after.trust_score ?? 0, status: pair.after.trust_status }}
       beforeUrl={buildPairImageUrl(pair.before.cld_public_id, Number(pair.before.cld_version), pair.before.consent_status)}
       afterUrl={buildPairImageUrl(pair.after.cld_public_id, Number(pair.after.cld_version), pair.after.consent_status)}
     />

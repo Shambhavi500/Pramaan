@@ -8,7 +8,7 @@ export interface SiteContext {
 
 /**
  * Resolves org / project / site from a public_id whose folder follows
- * "pramaan/<org-slug>/<site-code>/<file>", e.g. "pramaan/green-aravalli/GA-17/abc123".
+ * "pramaan/<org-slug>/<site-code>/<file>", e.g. "pramaan/jalsetu-foundation/JH-04/abc123".
  */
 export async function resolveContextFromFolder(publicId: string): Promise<SiteContext | null> {
   const [, orgSlug, siteCode] = publicId.split("/");
@@ -24,8 +24,9 @@ export async function resolveContextFromFolder(publicId: string): Promise<SiteCo
   if (siteCode) {
     const { data: site } = await supabase
       .from("site")
-      .select("id, project_id")
+      .select("id, project_id, project!inner(org_id)")
       .eq("code", siteCode)
+      .eq("project.org_id", org.id)
       .limit(1)
       .maybeSingle();
     if (site) {

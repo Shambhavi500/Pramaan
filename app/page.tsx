@@ -3,7 +3,7 @@ import { Children, type ReactNode } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import { StoryNav } from "@/components/story/StoryNav";
 import { StoryEffects } from "@/components/story/StoryEffects";
-import { Starfield } from "@/components/story/Starfield";
+import { CloudHero } from "@/components/story/CloudHero";
 import { HeroUrl } from "@/components/story/HeroUrl";
 import { Scrolly } from "@/components/story/Scrolly";
 import { Architecture } from "@/components/story/Architecture";
@@ -69,18 +69,18 @@ const LIES = [
 
 export default function StoryPage() {
   return (
-    <div className="bg-ink">
+    <div className="theme-dark min-h-screen">
       <StoryNav />
       <StoryEffects />
 
       {/* ---------- Hero ---------- */}
       <section className="glow relative overflow-hidden pt-32 pb-20 sm:pt-40">
-        <Starfield />
+        <CloudHero />
         <div className="relative mx-auto max-w-7xl px-5">
-          <div data-hero className="max-w-4xl space-y-7">
+          <div data-hero className="max-w-4xl space-y-7 lg:max-w-[50%]">
             <span className="chip-lime">Code Cubicle 6.0 · Cloudinary challenge</span>
-            <h1 className="text-[clamp(3.5rem,11vw,8rem)] font-light leading-none tracking-tight">Pramaan</h1>
-            <p className="text-2xl font-light text-soft sm:text-3xl">हर तस्वीर, एक प्रमाण · every photo, a proof</p>
+            <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-normal leading-[1.02] tracking-[-0.025em]">Turn field media into verifiable impact.</h1>
+            <p className="text-xl font-light text-soft sm:text-2xl">Pramaan (प्रमाण) · हर तस्वीर, एक प्रमाण · every photo, a proof</p>
             <p className="max-w-2xl text-lg font-light leading-relaxed text-white/85">
               An evidence pipeline for field media. Cloudinary inspects and transforms every photo, a database remembers it, and a hash-chained ledger makes any later edit visible.
             </p>

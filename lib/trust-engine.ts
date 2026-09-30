@@ -59,6 +59,7 @@ export async function computeTrustScore(
   let geo: GeoAssessment = { status: gps || hasGps ? "inferred" : "no_gps", distanceM: null };
   let p3Score = hasGps ? 1.0 : 0.0;
   let p3Reason: string | undefined = hasGps ? undefined : "No EXIF GPS on the image.";
+  let p3HardFlag = false;
 
   if (gps && siteId) {
     const { data, error } = await supabase.rpc("check_site_geofence", {
@@ -83,10 +84,20 @@ export async function computeTrustScore(
         p3Score = 0.0;
         p3Reason = `${src} GPS is ${Math.round(row.distance_m)} m outside the site geofence.`;
         geo = { status: "outside_geofence", distanceM: row.distance_m };
+        // A photo taken well away from the site cannot support a claim about the site.
+        hardFlag = true;
+        p3HardFlag = true;
       }
     }
   }
-  signals.push({ id: "P3", name: "Geofence Containment", score: p3Score, weight: 10, reason: p3Reason });
+  signals.push({
+    id: "P3",
+    name: "Geofence Containment",
+    score: p3Score,
+    weight: 10,
+    reason: p3Reason,
+    ...(p3HardFlag ? { hardFlag: true } : {}),
+  });
 
   // I1: pHash near-duplicate search (excluding the asset itself, e.g. on webhook redelivery)
   const currentPhash: string | undefined = uploadPayload.phash;

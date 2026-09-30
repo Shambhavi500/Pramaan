@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import { Camera, MapPin, ShieldCheck, UploadCloud, RefreshCw } from "lucide-react";
+import { DEMO_SITE_CODE, DEMO_SITE_NAME, DEMO_UPLOAD_FOLDER } from "@/lib/demo-site";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { ACTIVITIES, PHASES, type Activity, type Phase } from "@/lib/activities";
 
-const FOLDER = "pramaan/green-aravalli/GA-17";
+const FOLDER = DEMO_UPLOAD_FOLDER;
 
 export default function CapturePage() {
   const [file, setFile] = useState<File | null>(null);
@@ -99,90 +101,87 @@ export default function CapturePage() {
     }
   };
 
+  const isError = status.startsWith("Error");
   return (
-    <div className="mx-auto max-w-md space-y-6 pb-4">
-      <div className="space-y-2">
-        <span className="chip-lime">Field capture</span>
-        <h1 className="flex items-center gap-2 text-4xl font-light tracking-tight">
-          <Camera className="h-7 w-7 text-lime" aria-hidden /> Capture evidence
-        </h1>
-        <p className="text-sm text-soft">Site GA-17 · Kotra Check Dam</p>
-      </div>
+    <div className="mx-auto max-w-md pb-4">
+      <PageHeader stage="Bring in · Capture" title="Capture evidence">
+        Site {DEMO_SITE_CODE} · {DEMO_SITE_NAME}
+      </PageHeader>
 
-      <label className="panel relative flex h-64 cursor-pointer flex-col items-center justify-center overflow-hidden border-dashed">
-        {preview ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={preview} alt="Capture preview" className="h-full w-full object-cover" />
-        ) : (
-          <div className="p-4 text-center">
-            <Camera className="mx-auto mb-2 h-10 w-10 text-link" aria-hidden />
-            <p className="text-base font-normal">Tap to capture field evidence</p>
-            <p className="text-xs text-muted">Camera with hardware geotagging</p>
-          </div>
-        )}
-        <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFileChange} />
-      </label>
-
-      <div className="grid grid-cols-2 gap-3 text-xs">
-        <label className="space-y-1">
-          <span className="font-medium text-soft">Activity</span>
-          <select
-            value={activity}
-            onChange={(e) => setActivity(e.target.value as Activity)}
-            disabled={uploading}
-            className="field"
-          >
-            {ACTIVITIES.map((a) => (
-              <option key={a.value} value={a.value}>
-                {a.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="space-y-1">
-          <span className="font-medium text-soft">Phase</span>
-          <select
-            value={phase}
-            onChange={(e) => setPhase(e.target.value as Phase)}
-            disabled={uploading}
-            className="field"
-          >
-            {PHASES.map((p) => (
-              <option key={p.value} value={p.value}>
-                {p.label}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-
-      {sha256 && (
-        <div className="panel-flat space-y-2 p-3 text-xs">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 shrink-0 text-good" aria-hidden />
-            <span className="truncate font-mono">SHA-256: {sha256}</span>
-          </div>
-          {gps && (
-            <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-link" aria-hidden />
-              <span>
-                GPS: {gps.lat.toFixed(4)}°N, {gps.lng.toFixed(4)}°E (±{Math.round(gps.acc)}m)
-              </span>
+      <div className="space-y-5">
+        <label className="surface-1 relative flex h-64 cursor-pointer flex-col items-center justify-center overflow-hidden border-dashed !border-border-strong focus-within:outline-2 focus-within:outline-focus">
+          {preview ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={preview} alt="Capture preview" className="h-full w-full object-cover" />
+          ) : (
+            <div className="p-4 text-center">
+              <Camera className="mx-auto mb-2 h-10 w-10 text-sky-600" aria-hidden />
+              <p className="text-base font-medium">Tap to capture field evidence</p>
+              <p className="text-xs text-ink-600">Camera with hardware geotagging</p>
             </div>
           )}
+          <input type="file" accept="image/*" capture="environment" className="sr-only" onChange={handleFileChange} />
+        </label>
+
+        <div className="grid grid-cols-2 gap-3 text-xs">
+          <label className="space-y-1">
+            <span className="overline">Activity</span>
+            <select value={activity} onChange={(e) => setActivity(e.target.value as Activity)} disabled={uploading} className="input">
+              {ACTIVITIES.map((a) => (
+                <option key={a.value} value={a.value}>
+                  {a.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="space-y-1">
+            <span className="overline">Phase</span>
+            <select value={phase} onChange={(e) => setPhase(e.target.value as Phase)} disabled={uploading} className="input">
+              {PHASES.map((p) => (
+                <option key={p.value} value={p.value}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
-      )}
 
-      {status && (
-        <p role="status" className={`text-center text-xs font-medium ${status.startsWith("Error") ? "text-bad" : "text-lime"}`}>
-          {status}
-        </p>
-      )}
+        {sha256 && (
+          <div className="surface-1 space-y-2 p-3 text-xs">
+            <div className="flex items-start gap-2">
+              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-verified" aria-hidden />
+              <span className="min-w-0">
+                <span className="overline block">SHA-256</span>
+                <span className="hash !block">{sha256}</span>
+              </span>
+            </div>
+            {gps && (
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-sky-600" aria-hidden />
+                <span className="mono-meta">
+                  {gps.lat.toFixed(4)}°N, {gps.lng.toFixed(4)}°E (±{Math.round(gps.acc)}m)
+                </span>
+              </div>
+            )}
+          </div>
+        )}
 
-      <button disabled={!file || !sha256 || uploading} onClick={handleUpload} className="btn-lime w-full py-3">
-        {uploading ? <RefreshCw className="h-5 w-5 animate-spin" aria-hidden /> : <UploadCloud className="h-5 w-5" aria-hidden />}
-        {uploading ? "Verifying with Cloudinary..." : "Submit proof"}
-      </button>
+        {status && (
+          <p
+            role="status"
+            className={`rounded-sm border px-3 py-2 text-center text-[13px] ${
+              isError ? "border-flagged-line bg-flagged-bg text-flagged-fg" : "border-sky-200 bg-sky-50 text-sky-700"
+            }`}
+          >
+            {status}
+          </p>
+        )}
+
+        <button disabled={!file || !sha256 || uploading} onClick={handleUpload} className="btn-primary w-full py-3">
+          {uploading ? <RefreshCw className="h-5 w-5 animate-spin" aria-hidden /> : <UploadCloud className="h-5 w-5" aria-hidden />}
+          {uploading ? "Verifying with Cloudinary..." : "Submit proof"}
+        </button>
+      </div>
     </div>
   );
 }

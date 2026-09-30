@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 
 import { supabase } from "@/lib/db";
 import { buildSafeEvidenceUrl } from "@/lib/url-builder";
+import { EmptyState } from "@/components/ui/PageHeader";
 import ReviewClient, { type ReviewItem } from "./client";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -18,12 +19,7 @@ export default async function ReviewPage() {
     .limit(50);
 
   if (error) {
-    return (
-      <div className="mx-auto max-w-md py-16 text-center">
-        <h2 className="text-2xl font-light">Could not load the review queue</h2>
-        <p className="mt-2 text-sm text-soft">{error.message}</p>
-      </div>
-    );
+    return <EmptyState title="Could not load the review queue">{error.message}</EmptyState>;
   }
 
   const items: ReviewItem[] = (data ?? []).map((row: any) => {

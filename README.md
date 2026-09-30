@@ -6,7 +6,7 @@
 
 **Proof for every photo.** An evidence pipeline for field media, built on Cloudinary.
 
-`Next.js 15` · `React 19` · `Cloudinary` · `Supabase (PostGIS + pgvector)` · `Claude`
+`Next.js 15` · `React 19` · `Cloudinary` · `Supabase (PostGIS)` · `Claude`
 
 *Code Cubicle 6.0 · Cloudinary track · PS-02 "AI-Powered Impact & Sustainability Media Platform"*
 
@@ -83,7 +83,7 @@ Cloudinary does the perceiving and rendering: analysis, hashing, transformations
 | App | Next.js 15 (App Router), React 19, TypeScript |
 | UI | Tailwind CSS 4, GSAP, Lucide, `react-compare-slider` |
 | Media | Cloudinary: `next-cloudinary`, `cloudinary` SDK, `@cloudinary/analysis` |
-| Data | Supabase Postgres with PostGIS (geofences) and pgvector |
+| Data | Supabase Postgres with PostGIS (geofences) |
 | AI reasoning | Anthropic SDK with Zod structured outputs |
 
 ## Getting started
@@ -95,7 +95,7 @@ npm install
 cp .env.example .env.local   # then fill in every value
 ```
 
-1. Run [`supabase/migration.sql`](supabase/migration.sql) in the Supabase SQL Editor (Postgres 14+). It creates the tables, the PostGIS and pgvector extensions, and the `match_phash_candidates` and `check_site_geofence` functions.
+1. Create the schema from [`supabase/migrations/`](supabase/migrations). Against a hosted project: `npx supabase login`, `npx supabase link --project-ref <ref>`, `npx supabase db push`. Locally (needs Docker): `npx supabase start` then `npx supabase db reset`. The migration enables PostGIS, creates the tables, indexes and the `match_phash_candidates` / `check_site_geofence` functions, and turns on RLS. It contains no demo data. RLS note: the app has no user auth yet and uses the service-role key server-side, so anon access is denied but per-organisation isolation is not enforced per user; add auth and per-org policies before exposing the app publicly.
 2. Create the Cloudinary configuration as code:
 
    ```bash
@@ -103,7 +103,7 @@ cp .env.example .env.local   # then fill in every value
    ```
 
    This creates the named transformations, the structured metadata fields and the `pramaan_evidence` upload preset with its `eval` gate.
-3. Insert the demo organisation, project, site, evidence rows and derivative:
+3. Insert the demo dataset (JalSetu Foundation, Check Dam JH-04; see [`docs/demo-jh04.md`](docs/demo-jh04.md), which also lists the demo images you need to upload). Add `-- --reset-legacy` once to delete the old Green Aravalli demo org:
 
    ```bash
    npm run seed
@@ -137,8 +137,10 @@ Open <http://localhost:3000>.
 | `npm run dev` | Development server |
 | `npm run build` / `npm start` | Production build and server |
 | `npm run typecheck` | `tsc --noEmit` |
+| `npm run check:demo` | Consistency checks for the demo dataset (no database) |
 | `npm run setup:cloudinary` | Provision Cloudinary config |
 | `npm run seed` | Insert demo data |
+| `npm run db:verify` | Check the configured database: tables, functions, PostGIS, pHash, RLS, seeded claims and coverage |
 
 ## Routes
 
@@ -174,7 +176,7 @@ lib/
   geo.ts, phash.ts         GPS parsing, perceptual-hash handling
 jobs/analyze-image.ts      Webhook job: analyse, score, record
 scripts/                   setup-cloudinary.ts, seed.ts
-supabase/migration.sql     Schema, extensions, SQL functions
+supabase/migrations/       Schema, extension, SQL functions, RLS
 research/                  Research and solution design (see below)
 ```
 

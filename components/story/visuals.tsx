@@ -40,7 +40,7 @@ const context = [
 paramsToSign = {
   upload_preset: "pramaan_evidence",
   timestamp,
-  folder: "pramaan/green-aravalli/GA-17",
+  folder: "pramaan/jalsetu-foundation/JH-04",
   context,           // signed, so it can't be swapped later
 };`}</Code>
     <Code title="app/api/sign-upload/route.ts">{`
@@ -230,10 +230,10 @@ export const StoryReport = (
   <div className="panel space-y-4 p-5">
     <p className="text-xs font-semibold uppercase tracking-wide text-muted">Every paragraph carries its evidence</p>
     <div className="panel-flat space-y-2 p-4 text-sm">
-      <p className="font-light">The Kotra check dam was completed and photographed at the same site before and after construction.</p>
+      <p className="font-light">Check dam JH-04 was built and photographed from the same vantage point before and after construction.</p>
       <div className="flex gap-2">
-        <span className="chip-outline normal-case tracking-normal">ev_01J9Z6Q2</span>
-        <span className="chip-outline normal-case tracking-normal">ev_01J9Z6Q3</span>
+        <span className="chip-outline normal-case tracking-normal">ev_jh04_before_01</span>
+        <span className="chip-outline normal-case tracking-normal">ev_jh04_after_01</span>
       </div>
     </div>
     <ul className="space-y-1.5 text-xs text-soft">

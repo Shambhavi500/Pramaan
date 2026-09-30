@@ -4,8 +4,8 @@ import { Logo } from "./Logo";
 export function Brand({ className = "" }: { className?: string }) {
   return (
     <Link href="/" className={`flex items-center gap-2.5 ${className}`} aria-label="Pramaan home">
-      <Logo size={32} />
-      <span className="text-xl font-normal tracking-tight">Pramaan</span>
+      <Logo size={30} />
+      <span className="font-display text-xl tracking-tight">Pramaan</span>
     </Link>
   );
 }

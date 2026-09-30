@@ -8,7 +8,9 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "setup:cloudinary": "tsx --env-file=.env.local scripts/setup-cloudinary.ts",
-    "seed": "tsx --env-file=.env.local scripts/seed.ts"
+    "seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "db:verify": "tsx --env-file=.env.local scripts/verify-db.ts",
+    "check:demo": "tsx scripts/check-demo-dataset.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.129.0",

@@ -2,8 +2,8 @@ import { Brand } from "@/components/Brand";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 bg-navy pb-10 pt-16 text-sm font-medium text-soft">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 sm:flex-row sm:items-end sm:justify-between">
+    <footer className="theme-dark mt-24 bg-atmosphere-900 pb-10 pt-16 text-sm font-medium text-soft">
+      <div className="mx-auto flex max-w-[1360px] flex-col gap-6 px-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-3">
           <Brand />
           <p className="max-w-sm font-light">

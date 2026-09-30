@@ -1,0 +1,31 @@
+# Supabase CLI config for local development (`supabase start`, `supabase db reset`).
+# Link a hosted project with `supabase link --project-ref <ref>`, then `supabase db push`.
+project_id = "pramaan"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+# Keep in step with the hosted project's Postgres major version.
+major_version = 17
+
+[db.migrations]
+enabled = true
+
+[db.seed]
+# Demo data is opt-in: run `npm run seed` after `supabase db reset`. It is never applied automatically.
+enabled = false
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"

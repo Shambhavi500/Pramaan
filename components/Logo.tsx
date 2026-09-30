@@ -17,7 +17,7 @@ export function Logo({ size = 32, className = "" }: { size?: number; className?:
               width={CELL - GAP}
               height={CELL - GAP}
               rx={CELL * 0.16}
-              fill={k === "a" ? "var(--color-lime, #b8f36b)" : "currentColor"}
+              fill={k === "a" ? "var(--logo-accent, var(--color-sky-600))" : "currentColor"}
               opacity={OPACITY[k]}
             />
           ),
