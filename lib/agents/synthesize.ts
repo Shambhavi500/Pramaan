@@ -84,7 +84,8 @@ export async function synthesizeEvidence(state: InvestigationState): Promise<Inv
         .filter((c) => c.supportingIds.length > 0); // an uncited claim is dropped, not softened
       timeline = out.timeline.map((t) => ({ ...t, evidenceIds: validIds(t.evidenceIds, valid) })).filter((t) => t.evidenceIds.length > 0);
     } catch (err) {
-      notes.push(`Synthesis failed: ${errMsg(err)}`);
+      // Without synthesis there is nothing to report on; failing loudly beats looping on empty claims.
+      throw new Error(`Synthesis failed: ${errMsg(err)}`);
     }
   }
 

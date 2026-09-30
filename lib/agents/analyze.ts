@@ -72,6 +72,10 @@ export async function analyzeAgent(state: InvestigationState): Promise<Investiga
     }
   }
 
+  if (todo.length && Object.values(results).every((r) => r.uncertain[0]?.startsWith("Automated"))) {
+    throw new Error(`Analysis failed for every item. ${notes[0] ?? ""}`.trim());
+  }
+
   await recordAgentAction({
     orgId: site.orgId,
     subjectType: "investigation",

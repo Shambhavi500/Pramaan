@@ -36,6 +36,10 @@ async function withRetry<T>(fn: () => Promise<T>): Promise<T> {
       return await fn();
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
+      if (/PerDay/i.test(msg)) {
+        // Retrying cannot help: the daily quota is spent. Say so plainly instead of surfacing the raw API error.
+        throw new Error("Gemini daily quota is exhausted for this API key/model (the free tier allows very few requests per day). Use a billing-enabled key, set GEMINI_MODEL to another model, or try again after the quota resets.");
+      }
       const retryable = /\b(429|503)\b/.test(msg);
       if (!retryable || attempt >= 4) throw err;
       const hinted = /retry in ([\d.]+)s/i.exec(msg);
