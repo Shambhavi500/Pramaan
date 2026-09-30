@@ -32,14 +32,17 @@ export default async function InvestigatePage({ searchParams }: { searchParams: 
     const { data: cps } = await supabase.from("hitl_checkpoint").select("id, evidence_id, reason").eq("investigation_id", inv.id).is("decision", null);
     const { data: evs } = await supabase.from("evidence").select("id, cld_public_id").in("id", (cps ?? []).map((c) => c.evidence_id));
     const pid = new Map((evs ?? []).map((e) => [e.id, e.cld_public_id]));
-    pending = (cps ?? []).map((c) => ({
-      id: c.id,
-      evidenceId: c.evidence_id,
-      reason: c.reason,
-      thumbUrl: pid.get(c.evidence_id)
-        ? cloudinary.url(pid.get(c.evidence_id)!, { transformation: [{ width: 240, height: 240, crop: "fill" }, { fetch_format: "auto", quality: "auto" }], secure: true, sign_url: true })
-        : null,
-    }));
+    pending = (cps ?? []).map((c) => {
+      const publicId = pid.get(c.evidence_id);
+      const key = publicId ? publicId.split("/").pop() : null;
+      const thumbUrl = key ? `/evidence/${key}.jpg` : null;
+      return {
+        id: c.id,
+        evidenceId: c.evidence_id,
+        reason: c.reason,
+        thumbUrl,
+      };
+    });
   }
 
   return (

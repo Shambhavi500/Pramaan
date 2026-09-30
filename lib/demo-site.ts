@@ -4,3 +4,4 @@ export const DEMO_ORG_SLUG = "jalsetu-foundation";
 export const DEMO_SITE_CODE = "JH-04";
 export const DEMO_SITE_NAME = "Check Dam JH-04";
 export const DEMO_UPLOAD_FOLDER = `pramaan/${DEMO_ORG_SLUG}/${DEMO_SITE_CODE}`;
+export const DEMO_SITE_COORDS = { lat: 22.7712, lng: 74.5921 };

@@ -1,8 +1,59 @@
-node_modules
-.next
-next-env.d.ts
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js build and cache
+.next/
+out/
+build/
+dist/
 *.tsbuildinfo
+next-env.d.ts
+
+# Environment and secrets (never commit real secrets)
+.env
 .env*.local
-.vercel
+.env.production
+.env.staging
+!.env.example
+
+# Supabase local
 supabase/.temp
 supabase/.branches
+
+# Vercel
+.vercel
+
+# Test artifacts & QA screenshots
+coverage/
+qa_screenshots/
+test-results/
+playwright-report/
+
+# Media scratch & recordings (keep repo lean)
+recordings/
+public/*.mp4
+public/*.webm
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.claude/
+
+# Temporary / Lock / OS files
+.DS_Store
+Thumbs.db
+~$*.pptx
+~$*.docx
+~$*.xlsx
+*.tmp
+*.bak
+*.log
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class

@@ -73,12 +73,17 @@ export function ImpactClaimCard({
           <ul className="grid gap-2 sm:grid-cols-2">
             {items.map((i) => (
               <li key={i.id} className="flex items-center gap-3 rounded-md border border-cloud-200 bg-cloud-25 p-2">
-                {i.imageUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={i.imageUrl} alt="" className="h-10 w-10 shrink-0 rounded-sm object-cover" loading="lazy" />
-                ) : (
-                  <span className="h-10 w-10 shrink-0 rounded-sm bg-cloud-100" aria-hidden />
-                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={i.imageUrl || `/evidence/${i.id.replace('ev_jh04_', '')}.jpg`}
+                  alt=""
+                  className="h-10 w-10 shrink-0 rounded-sm object-cover"
+                  loading="eager"
+                  onError={(e) => {
+                    const fallback = `/evidence/${i.id.replace('ev_jh04_', '')}.jpg`;
+                    (e.currentTarget as HTMLImageElement).src = fallback;
+                  }}
+                />
                 <span className="mono-id min-w-0 flex-1 truncate text-ink-700" title={i.id}>
                   {i.id}
                 </span>

@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { cloudinary } from "@/lib/cloudinary";
+import { cloudinary, isCloudinaryConfigured } from "@/lib/cloudinary";
 import { supabase } from "@/lib/db";
 import { appendLedgerEntry } from "@/lib/ledger";
 
@@ -58,22 +58,23 @@ export async function submitReviewDecision(
     orgId: evidence.org_id,
   });
 
-  // Mirror the decision into Cloudinary's moderation state (best effort; the DB is the system of record).
+  // Mirror the decision into Cloudinary's moderation state if configured (DB is system of record)
   const moderation = decision === "verified" ? "approved" : "rejected";
   let cloudinaryWarning: string | undefined;
-  try {
-    // The bundled typings omit the options overload of explicit(). If Cloudinary rejects a status value here, the api.update fallback below sets moderation_status.
-    const explicit = cloudinary.uploader.explicit as unknown as (
-      publicId: string,
-      options: { type: string; moderation: string }
-    ) => Promise<unknown>;
-    await explicit.call(cloudinary.uploader, evidence.cld_public_id, { type: "upload", moderation });
-  } catch (explicitErr) {
+  if (isCloudinaryConfigured()) {
     try {
-      await cloudinary.api.update(evidence.cld_public_id, { moderation_status: moderation });
-    } catch (updateErr) {
-      cloudinaryWarning = `Cloudinary moderation sync failed: ${errMsg(updateErr) || errMsg(explicitErr)}`;
-      console.error(cloudinaryWarning);
+      const explicit = cloudinary.uploader.explicit as unknown as (
+        publicId: string,
+        options: { type: string; moderation: string }
+      ) => Promise<unknown>;
+      await explicit.call(cloudinary.uploader, evidence.cld_public_id, { type: "upload", moderation });
+    } catch (explicitErr) {
+      try {
+        await cloudinary.api.update(evidence.cld_public_id, { moderation_status: moderation });
+      } catch (updateErr) {
+        cloudinaryWarning = `Cloudinary moderation sync failed: ${errMsg(updateErr) || errMsg(explicitErr)}`;
+        console.error(cloudinaryWarning);
+      }
     }
   }
 

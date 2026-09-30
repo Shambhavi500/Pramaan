@@ -2,7 +2,7 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 import { z } from "zod";
 import { supabase } from "@/lib/db";
-import { cloudinary } from "@/lib/cloudinary";
+import { cloudinary, isCloudinaryConfigured } from "@/lib/cloudinary";
 import { appendLedgerEntry } from "@/lib/ledger";
 import { generateStructured } from "@/lib/agents/gemini";
 
@@ -50,12 +50,19 @@ export async function POST(req: Request) {
     const storyId = `st_${Date.now()}`;
     const packTag = `pack_${storyId}`;
 
-    await cloudinary.uploader.add_tag(
-      packTag,
-      evidenceItems.map((e) => e.cld_public_id)
-    );
-    await cloudinary.uploader.multi(packTag, { format: "pdf", async: true });
-    const pdfUrl = cloudinary.url(`${packTag}.pdf`, { resource_type: "image", secure: true });
+    let pdfUrl: string | null = null;
+    if (isCloudinaryConfigured()) {
+      try {
+        await cloudinary.uploader.add_tag(
+          packTag,
+          evidenceItems.map((e) => e.cld_public_id)
+        );
+        await cloudinary.uploader.multi(packTag, { format: "pdf", async: true });
+        pdfUrl = cloudinary.url(`${packTag}.pdf`, { resource_type: "image", secure: true });
+      } catch (cldErr) {
+        console.warn("Cloudinary PDF generation skipped:", cldErr);
+      }
+    }
 
     const orgId = evidenceItems[0].org_id;
     const { error } = await supabase.from("story").insert({

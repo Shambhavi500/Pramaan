@@ -498,3 +498,15 @@ body {
 .theme-dark {
   --logo-accent: var(--color-sky-200);
 }
+
+/* Suppress Next.js development error overlay / issue badges in UI */
+nextjs-portal,
+[data-nextjs-dialog-overlay],
+[data-nextjs-toast],
+div[class*="nextjs-portal"],
+#__next-build-watcher {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

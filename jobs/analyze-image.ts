@@ -1,5 +1,5 @@
 import { CloudinaryAnalysis } from "@cloudinary/analysis";
-import { cloudinary } from "@/lib/cloudinary";
+import { cloudinary, isCloudinaryConfigured } from "@/lib/cloudinary";
 import { supabase } from "@/lib/db";
 import { computeTrustScore } from "@/lib/trust-engine";
 import { appendLedgerEntry } from "@/lib/ledger";
@@ -76,6 +76,9 @@ const fallbackVision = (claimedActivity: string) => ({
 });
 
 async function runVision(analysisUrl: string, claimedActivity: string): Promise<any> {
+  if (!isCloudinaryConfigured()) {
+    return fallbackVision(claimedActivity);
+  }
   try {
     const prompt =
       `Analyze this development project field photo against the claimed activity "${claimedActivity}". ` +
@@ -187,12 +190,14 @@ export async function analyzeImageJob(payload: any) {
     orgId: ctx.orgId,
   });
 
-  // Sync verdict back to the Cloudinary DAM so it is searchable there.
-  await cloudinary.uploader.explicit(publicId, {
-    type: "upload",
-    metadata: `trust_score=${trustResult.score}|activity=${visionData.activity}`,
-    ...(trustResult.status === "flagged" ? { moderation: "manual" } : {}),
-  }).catch((e) => console.error("DAM sync failed:", e?.message ?? e));
+  if (isCloudinaryConfigured()) {
+    // Sync verdict back to the Cloudinary DAM so it is searchable there.
+    await cloudinary.uploader.explicit(publicId, {
+      type: "upload",
+      metadata: `trust_score=${trustResult.score}|activity=${visionData.activity}`,
+      ...(trustResult.status === "flagged" ? { moderation: "manual" } : {}),
+    }).catch((e) => console.error("DAM sync failed:", e?.message ?? e));
+  }
 
   return { evidenceId, siteId: ctx.siteId, ...trustResult };
 }

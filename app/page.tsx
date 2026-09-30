@@ -192,7 +192,11 @@ export default function StoryPage() {
               ),
             },
           ]}
-          visuals={Children.toArray([CaptureCard, SignCode, EvalGate])}
+          visuals={[
+            <div key="v1">{CaptureCard}</div>,
+            <div key="v2">{SignCode}</div>,
+            <div key="v3">{EvalGate}</div>,
+          ]}
         />
       </Chapter>
 
@@ -231,7 +235,11 @@ export default function StoryPage() {
               ),
             },
           ]}
-          visuals={Children.toArray([WebhookCode, AnalysisDerivative, VisionJson])}
+          visuals={[
+            <div key="v1">{WebhookCode}</div>,
+            <div key="v2">{AnalysisDerivative}</div>,
+            <div key="v3">{VisionJson}</div>,
+          ]}
         />
       </Chapter>
 
@@ -292,7 +300,11 @@ export default function StoryPage() {
               ),
             },
           ]}
-          visuals={Children.toArray([ReviewCard, ReviewWrites, LedgerVisual])}
+          visuals={[
+            <div key="v1">{ReviewCard}</div>,
+            <div key="v2">{ReviewWrites}</div>,
+            <div key="v3">{LedgerVisual}</div>,
+          ]}
         />
       </Chapter>
 
@@ -338,7 +350,11 @@ export default function StoryPage() {
               ),
             },
           ]}
-          visuals={Children.toArray([PairVisual, CompositeCode, ExgVisual])}
+          visuals={[
+            <div key="v1">{PairVisual}</div>,
+            <div key="v2">{CompositeCode}</div>,
+            <div key="v3">{ExgVisual}</div>,
+          ]}
         />
       </Chapter>
 
@@ -374,7 +390,11 @@ export default function StoryPage() {
               ),
             },
           ]}
-          visuals={Children.toArray([SearchPlan, StoryReport, PdfCode])}
+          visuals={[
+            <div key="v1">{SearchPlan}</div>,
+            <div key="v2">{StoryReport}</div>,
+            <div key="v3">{PdfCode}</div>,
+          ]}
         />
       </Chapter>
 

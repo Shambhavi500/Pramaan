@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pramaan - Pitch Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    @page {
+      size: 1920px 1080px;
+      margin: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0c1a2e;
+      color: #0f1b2b;
+      -webkit-font-smoothing: antialiased;
+    }
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      padding: 64px 88px;
+      background-color: #fafcfe;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+    }
+    .font-serif {
+      font-family: 'Newsreader', Georgia, serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', Consolas, monospace;
+    }
+    .header {
+      margin-bottom: 32px;
+    }
+    .category-pill {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #235fa0;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .headline {
+      font-size: 34px;
+      font-weight: 600;
+      color: #0f1b2b;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .sublead {
+      font-size: 17px;
+      color: #4a5f78;
+      line-height: 1.45;
+      margin-top: 6px;
+      max-width: 1500px;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #d8e1ec;
+      border-radius: 14px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(15, 27, 43, 0.03);
+    }
+    .card-alt {
+      background: #f3f7fb;
+      border: 1px solid #b9c7d8;
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .card-alt img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid #d8e1ec;
+      background: #ffffff;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-verified {
+      background: #e1f3ea;
+      color: #0f6b45;
+      border: 1px solid #9dd5b8;
+    }
+    .badge-review {
+      background: #fbf0d9;
+      color: #8a5a00;
+      border: 1px solid #e8c27a;
+    }
+    .badge-flagged {
+      background: #fbe5e8;
+      color: #a32b3a;
+      border: 1px solid #eda3ad;
+    }
+    .badge-sky {
+      background: #eef5fc;
+      color: #235fa0;
+      border: 1px solid #93b8e3;
+    }
+    .footer-watermark {
+      position: absolute;
+      bottom: 24px;
+      left: 88px;
+      right: 88px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #667b93;
+      border-top: 1px solid #e9eff6;
+      padding-top: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== SLIDE 1: COVER ==================== -->
+  <div class="slide" style="justify-content: space-between;">
+    <div style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; height: 860px; align-items: stretch;">
+      
+      <!-- Left Hero Details Card -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 48px 44px;">
+        <div>
+          <span class="badge badge-sky" style="font-size: 13px; padding: 6px 14px; margin-bottom: 24px;">CODE CUBICLE 6.0 · CLOUDINARY TRACK (PS-02)</span>
+          <h1 class="font-serif" style="font-size: 58px; font-weight: 500; color: #0f1b2b; line-height: 1.05; margin-bottom: 12px;">Pramaan <span style="font-size: 40px; color: #235fa0; font-weight: 400;">(प्रमाण)</span></h1>
+          <h2 class="font-serif" style="font-size: 24px; font-weight: 400; color: #235fa0; line-height: 1.25; margin-bottom: 24px;">Proof for Every Photo: The Verifiable Field Media Pipeline</h2>
+          <p style="font-size: 18px; line-height: 1.6; color: #33475f; max-width: 720px;">
+            An end-to-end evidence pipeline turning unstructured field photos into cryptographic, explainable proof for CSR, climate & public infrastructure monitoring. Cloudinary inspects and transforms, Supabase enforces spatial and ledger custody, and Gemini reasons over verified records.
+          </p>
+        </div>
+
+        <div style="border-top: 1px solid #e9eff6; padding-top: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <div>
+            <div style="font-size: 12px; font-weight: 700; color: #667b93; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">CORE STACK</div>
+            <div class="font-mono" style="font-size: 14px; color: #0f1b2b; line-height: 1.4;">Next.js 15 (App Router)<br>Cloudinary AI Perception<br>Supabase PostGIS + pHash<br>LangGraph + Gemini 2.5</div>
+          </div>
+          <div>
+            <div style="font-size: 12px; font-weight: 700; color: #667b93; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">INTEGRITY STANDARD</div>
+            <div class="font-mono" style="font-size: 14px; color: #0f6b45; line-height: 1.4;">8-Signal Explainable Trust<br>Generative Firewall Gating<br>SHA-256 Tamper Ledger<br>DPDP Consent Redaction</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Authentic Hero Image Card -->
+      <div class="card-alt" style="padding: 12px; background: #0c1a2e; border: 1px solid #1e3350;">
+        <img src="real_screenshots/crops/crop_hero.png" alt="Pramaan Application Workspace Hero" style="border: none; border-radius: 8px;">
+      </div>
+
+    </div>
+
+    <div class="footer-watermark">
+      <span>Pramaan · Verifiable Field Media Pipeline</span>
+      <span>Slide 01 / 08 · Cover</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 2: THE PROBLEM ==================== -->
+  <div class="slide">
+    <div class="header">
+      <div class="category-pill">The Problem · Ground Reality</div>
+      <h1 class="headline">Visual claims without cryptographic custody fail under scrutiny.</h1>
+      <p class="sublead">Over ₹35,000 Cr in annual Indian CSR and ₹1.4 lakh Cr in public rural schemes rely on field photos that anyone can restage, recycle, or rephotograph off a screen.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; flex: 1;">
+      
+      <!-- Problem Card 1 -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span class="badge badge-review" style="margin-bottom: 16px;">01 / THE DATA LOSS</span>
+          <h2 class="font-serif" style="font-size: 26px; font-weight: 600; color: #0f1b2b; margin-bottom: 14px;">Context-Stripped Ingestion</h2>
+          <p style="font-size: 16px; line-height: 1.6; color: #33475f; margin-bottom: 16px;">
+            Field workers routinely share project photos over consumer messaging apps (WhatsApp, Telegram) that automatically compress images and strip EXIF timestamps and GPS coordinates.
+          </p>
+          <p style="font-size: 16px; line-height: 1.6; color: #33475f;">
+            Without device-level binding at capture, evidence enters donor databases in a total metadata vacuum, making temporal and spatial verification impossible.
+          </p>
+        </div>
+        <div class="font-mono" style="font-size: 13px; color: #8a5a00; border-top: 1px solid #fbf0d9; padding-top: 14px;">
+          CRITICAL FLAW: Metadata stripped at source
+        </div>
+      </div>
+
+      <!-- Problem Card 2 -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span class="badge badge-flagged" style="margin-bottom: 16px;">02 / THE FRAUD ADAPTATION</span>
+          <h2 class="font-serif" style="font-size: 26px; font-weight: 600; color: #0f1b2b; margin-bottom: 14px;">Photographs of Photographs</h2>
+          <p style="font-size: 16px; line-height: 1.6; color: #33475f; margin-bottom: 16px;">
+            When India made geotagged photos mandatory for MGNREGS, ₹2,600 Cr in fake wage claims were uncovered in Rajasthan in 7 months (Nov 2024–Jun 2025).
+          </p>
+          <p style="font-size: 16px; line-height: 1.6; color: #33475f;">
+            Fraud quickly adapted: operators photographed laptop screens showing old work to forge fresh GPS timestamps. By July 2025, MoRD ordered emergency manual checks.
+          </p>
+        </div>
+        <div class="font-mono" style="font-size: 13px; color: #a32b3a; border-top: 1px solid #fbe5e8; padding-top: 14px;">
+          CASE EVIDENCE: MoRD July 2025 Circular
+        </div>
+      </div>
+
+      <!-- Problem Card 3 -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span class="badge badge-sky" style="margin-bottom: 16px;">03 / THE REGULATORY RISK</span>
+          <h2 class="font-serif" style="font-size: 26px; font-weight: 600; color: #0f1b2b; margin-bottom: 14px;">Mandated Impact Audits</h2>
+          <p style="font-size: 16px; line-height: 1.6; color: #33475f; margin-bottom: 16px;">
+            Companies Act Rule 8(3) mandates independent third-party impact assessments for large CSR outlays, yet assessors receive unlinked photo dumps with zero verifiable provenance.
+          </p>
+          <p style="font-size: 16px; line-height: 1.6; color: #33475f;">
+            Simultaneously, India's DPDP Act imposes severe penalties for non-consensual biometric and beneficiary image publishing, exposing organizations to dual compliance failure.
+          </p>
+        </div>
+        <div class="font-mono" style="font-size: 13px; color: #235fa0; border-top: 1px solid #eef5fc; padding-top: 14px;">
+          LEGAL REQUIREMENT: Rule 8(3) + DPDP Act
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-watermark">
+      <span>Pramaan · Verifiable Field Media Pipeline</span>
+      <span>Slide 02 / 08 · The Problem</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 3: OUR SOLUTION ==================== -->
+  <div class="slide">
+    <div class="header">
+      <div class="category-pill">Our Solution · The Evidence Pipeline</div>
+      <h1 class="headline">From field capture to cited report: every pixel traceable.</h1>
+      <p class="sublead">Pramaan provides an unbroken chain of custody, ensuring that only verified, in-geofence, non-synthetic media enters institutional impact reports.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 40px; flex: 1;">
+      
+      <!-- 4 Stages List -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 36px;">
+        
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+            <span class="badge badge-sky">01 / CAPTURE & GATE</span>
+            <span class="font-serif" style="font-size: 20px; font-weight: 600; color: #0f1b2b;">Device-Level Binding & Intake Gate</span>
+          </div>
+          <p style="font-size: 15px; color: #33475f; line-height: 1.5; padding-left: 4px;">
+            Field capture client locks device GPS and computes SHA-256 before direct signed upload. Cloudinary intake <code class="font-mono" style="background:#f3f7fb; padding:2px 6px; border-radius:4px;">eval</code> gate rejects corrupted or oversized files before incurring storage costs.
+          </p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+            <span class="badge badge-sky">02 / PERCEPTION</span>
+            <span class="font-serif" style="font-size: 20px; font-weight: 600; color: #0f1b2b;">Automated Multi-Modal Inspection</span>
+          </div>
+          <p style="font-size: 15px; color: #33475f; line-height: 1.5; padding-left: 4px;">
+            Cloudinary extracts EXIF metadata, computes 64-bit perceptual hash (pHash), identifies faces for privacy redaction, and executes AI Vision with structured JSON schemas to confirm activity claims.
+          </p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+            <span class="badge badge-review">03 / VERIFY</span>
+            <span class="font-serif" style="font-size: 20px; font-weight: 600; color: #0f1b2b;">Explainable 8-Signal Trust Engine</span>
+          </div>
+          <p style="font-size: 15px; color: #33475f; line-height: 1.5; padding-left: 4px;">
+            Scores evidence 0 to 100 with clear weights. Dual hard caps isolate duplicate photos (pHash &le; 4 bits), screen recaptures, and out-of-geofence submissions directly into a human review queue.
+          </p>
+        </div>
+
+        <div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+            <span class="badge badge-verified">04 / PROVE</span>
+            <span class="font-serif" style="font-size: 20px; font-weight: 600; color: #0f1b2b;">Tamper-Evident Ledger & Lineage QR</span>
+          </div>
+          <p style="font-size: 15px; color: #33475f; line-height: 1.5; padding-left: 4px;">
+            Every review, derivative, and report citation is committed to a SHA-256 hash-chained ledger. External auditors scan public QR codes to verify complete transformation recipes back to raw source.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Right Prototype Hub Screenshot -->
+      <div class="card-alt" style="padding: 14px;">
+        <img src="real_screenshots/crops/crop_prototype.png" alt="Pramaan Prototype Operational Hub">
+      </div>
+
+    </div>
+
+    <div class="footer-watermark">
+      <span>Pramaan · Verifiable Field Media Pipeline</span>
+      <span>Slide 03 / 08 · Our Solution</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 4: HOW IT WORKS ==================== -->
+  <div class="slide">
+    <div class="header">
+      <div class="category-pill">System Architecture · Implementation</div>
+      <h1 class="headline">Perception, reasoning, and custody operating in strict isolation.</h1>
+      <p class="sublead">Cloudinary inspects and transforms media; Supabase enforces spatial boundaries and cryptographic ledger custody; Gemini reasons strictly over structured records.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.25fr 1fr; gap: 40px; flex: 1;">
+      
+      <!-- Left Architecture Diagram from App -->
+      <div class="card-alt" style="padding: 14px; background: #0c1a2e; border: 1px solid #1e3350;">
+        <img src="real_screenshots/crops/crop_architecture.png" alt="Pramaan Production Architecture Diagram" style="border: none;">
+      </div>
+
+      <!-- Right 3 Pillars Breakdown -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 36px;">
+        
+        <div>
+          <span class="badge badge-sky" style="margin-bottom: 10px;">TIER 01 / MEDIA PERCEPTION</span>
+          <h2 class="font-serif" style="font-size: 22px; font-weight: 600; color: #0f1b2b; margin-bottom: 8px;">Cloudinary Media Engine</h2>
+          <p style="font-size: 15px; line-height: 1.5; color: #33475f;">
+            Direct signed uploads enforce preset configurations. Cloudinary performs pre-storage eval validation, computes 64-bit pHash, parses EXIF geolocation, runs AI Vision with structured JSON output, and serves deterministic derived assets.
+          </p>
+        </div>
+
+        <div style="border-top: 1px solid #e9eff6; padding-top: 20px;">
+          <span class="badge badge-review" style="margin-bottom: 10px;">TIER 02 / SPATIAL & LEDGER CUSTODY</span>
+          <h2 class="font-serif" style="font-size: 22px; font-weight: 600; color: #0f1b2b; margin-bottom: 8px;">Supabase Postgres + PostGIS</h2>
+          <p style="font-size: 15px; line-height: 1.5; color: #33475f;">
+            Executes spatial containment checks (<code class="font-mono" style="font-size:13px;">check_site_geofence</code>) with 150m buffer. Performs bitwise Hamming distance candidate matching (<code class="font-mono" style="font-size:13px;">match_phash_candidates</code>) and appends cryptographic SHA-256 ledger entries.
+          </p>
+        </div>
+
+        <div style="border-top: 1px solid #e9eff6; padding-top: 20px;">
+          <span class="badge badge-verified" style="margin-bottom: 10px;">TIER 03 / AGENTIC REASONING</span>
+          <h2 class="font-serif" style="font-size: 22px; font-weight: 600; color: #0f1b2b; margin-bottom: 8px;">LangGraph + Gemini 2.5</h2>
+          <p style="font-size: 15px; line-height: 1.5; color: #33475f;">
+            Multi-agent investigation pipeline (understand, organize, analyze, compare, discover, report) strictly reasons over verified database rows. Human-in-the-loop checkpoints prevent unreviewed media from reaching synthesis.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="footer-watermark">
+      <span>Pramaan · Verifiable Field Media Pipeline</span>
+      <span>Slide 04 / 08 · System Architecture</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 5: CORE PRODUCT EXPERIENCE ==================== -->
+  <div class="slide">
+    <div class="header">
+      <div class="category-pill">Core Product Experience · Human Verification</div>
+      <h1 class="headline">Explainable trust scoring replaces black-box guessing.</h1>
+      <p class="sublead">Reviewers inspect flagged media with transparent signal breakdowns, impact claims reflect verified evidence, and temporal change is proven through baseline alignment.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; flex: 1;">
+      
+      <!-- Step 1: Review Queue -->
+      <div class="card" style="display: flex; flex-direction: column; padding: 20px;">
+        <div class="card-alt" style="height: 250px; margin-bottom: 18px; padding: 8px;">
+          <img src="real_screenshots/crops/crop_review.png" alt="Moderation Review Queue Interface">
+        </div>
+        <div>
+          <span class="badge badge-flagged" style="margin-bottom: 8px;">STEP 01 / MODERATION</span>
+          <h2 class="font-serif" style="font-size: 20px; font-weight: 600; color: #0f1b2b; margin-bottom: 8px;">Review Queue & Hard Flags</h2>
+          <p style="font-size: 14px; line-height: 1.55; color: #33475f;">
+            Evidence <code class="font-mono" style="font-size:12px; background:#f3f7fb; padding:1px 4px;">ev_jh04_after_wronggeo</code> flagged with Trust Score 40. Alert: <em>"EXIF GPS is 6,327 m outside site geofence."</em> Keyboard hotkeys <kbd class="font-mono" style="border:1px solid #d8e1ec; padding:1px 4px; border-radius:3px;">V</kbd> and <kbd class="font-mono" style="border:1px solid #d8e1ec; padding:1px 4px; border-radius:3px;">R</kbd> write decisions directly to audit ledger.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 2: Impact Claims -->
+      <div class="card" style="display: flex; flex-direction: column; padding: 20px;">
+        <div class="card-alt" style="height: 250px; margin-bottom: 18px; padding: 8px;">
+          <img src="real_screenshots/crops/crop_claims.png" alt="Impact Claims and Verification Coverage">
+        </div>
+        <div>
+          <span class="badge badge-sky" style="margin-bottom: 8px;">STEP 02 / CLAIMS</span>
+          <h2 class="font-serif" style="font-size: 20px; font-weight: 600; color: #0f1b2b; margin-bottom: 8px;">Impact Claims Coverage</h2>
+          <p style="font-size: 14px; line-height: 1.55; color: #33475f;">
+            Claims scored solely against verified proof. Check dam construction: <strong>Strong (5/5, 100%)</strong>. Water retention: <strong>Moderate (4/6, 67%)</strong>. Vegetation: <strong>Gap (2/6, 33%)</strong>. Flagged photos are mathematically excluded from impact metrics.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 3: Compare Slider -->
+      <div class="card" style="display: flex; flex-direction: column; padding: 20px;">
+        <div class="card-alt" style="height: 250px; margin-bottom: 18px; padding: 8px;">
+          <img src="real_screenshots/crops/crop_compare.png" alt="Before and After Alignment Slider">
+        </div>
+        <div>
+          <span class="badge badge-verified" style="margin-bottom: 8px;">STEP 03 / TEMPORAL PROOF</span>
+          <h2 class="font-serif" style="font-size: 20px; font-weight: 600; color: #0f1b2b; margin-bottom: 8px;">Before & After Alignment</h2>
+          <p style="font-size: 14px; line-height: 1.55; color: #33475f;">
+            Interactive comparison locks baseline dry gully (May 2026) against completed post-monsoon check dam (Sep 2026) from identical surveyed vantage points. Proves physical structure and water impoundment over time.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-watermark">
+      <span>Pramaan · Verifiable Field Media Pipeline</span>
+      <span>Slide 05 / 08 · Core Product Experience</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 6: TECHNICAL INNOVATION / AI ==================== -->
+  <div class="slide">
+    <div class="header">
+      <div class="category-pill">Technical Innovation · Integrity Engineering</div>
+      <h1 class="headline">Deterministic perception paired with agentic reasoning.</h1>
+      <p class="sublead">Pramaan enforces strict architectural boundaries so AI models provide high-level reasoning without ever contaminating the underlying evidence layer.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1;">
+      
+      <!-- 3 Technical Innovations -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 36px;">
+        
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span class="badge badge-flagged">INNOVATION 01</span>
+            <span class="font-serif" style="font-size: 20px; font-weight: 600; color: #0f1b2b;">The Generative Firewall</span>
+          </div>
+          <p style="font-size: 15px; color: #33475f; line-height: 1.5;">
+            Every transformation classified as <code class="font-mono" style="font-size:13px;">transcoded</code>, <code class="font-mono" style="font-size:13px;">redacted</code>, <code class="font-mono" style="font-size:13px;">edited</code>, or <code class="font-mono" style="font-size:13px;">ai_generated</code>. <code class="font-mono" style="font-size:13px;">assertGenerativeFirewall()</code> throws on <code class="font-mono" style="font-size:13px;">e_gen_*</code>, <code class="font-mono" style="font-size:13px;">b_gen_fill</code>, or upscaling. Synthetic pixels are strictly banned from evidence.
+          </p>
+        </div>
+
+        <div style="border-top: 1px solid #e9eff6; padding-top: 18px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span class="badge badge-review">INNOVATION 02</span>
+            <span class="font-serif" style="font-size: 20px; font-weight: 600; color: #0f1b2b;">PostGIS Containment & 64-bit pHash</span>
+          </div>
+          <p style="font-size: 15px; color: #33475f; line-height: 1.5;">
+            PostGIS calculates spatial distance to polygonal site boundaries; &gt;150 m triggers a hard flag cap (Score 40). Bitwise popcount pHash matching in SQL identifies reused media (&le;4 bits Hamming) across previous projects, even after cropping or compression.
+          </p>
+        </div>
+
+        <div style="border-top: 1px solid #e9eff6; padding-top: 18px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span class="badge badge-verified">INNOVATION 03</span>
+            <span class="font-serif" style="font-size: 20px; font-weight: 600; color: #0f1b2b;">LangGraph 6-Agent Pipeline with HITL</span>
+          </div>
+          <p style="font-size: 15px; color: #33475f; line-height: 1.5;">
+            Multi-agent investigation graph (understand, organize, analyze, identify, compare, synthesize, discover, report). Flagged evidence halts execution at human-in-the-loop checkpoints. Uncited claims are pruned; search loops capped at 3.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Right Firewall Lab Screenshot -->
+      <div class="card-alt" style="padding: 14px;">
+        <img src="real_screenshots/crops/crop_firewall.png" alt="Generative Firewall Interactive Lab">
+      </div>
+
+    </div>
+
+    <div class="footer-watermark">
+      <span>Pramaan · Verifiable Field Media Pipeline</span>
+      <span>Slide 06 / 08 · Technical Innovation</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 7: KEY DIFFERENTIATORS ==================== -->
+  <div class="slide">
+    <div class="header">
+      <div class="category-pill">Key Differentiators · Forensic Standard</div>
+      <h1 class="headline">Built for institutional credibility, not casual photo sharing.</h1>
+      <p class="sublead">Every technical decision in Pramaan is engineered to survive independent auditor scrutiny, corporate ESG audits, and regulatory inspection.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1;">
+      
+      <!-- 4 Differentiators Cards List -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 36px;">
+        
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+            <span class="badge badge-verified">01</span>
+            <span class="font-serif" style="font-size: 19px; font-weight: 600; color: #0f1b2b;">Explainable Scoring Over Black-Box AI</span>
+          </div>
+          <p style="font-size: 14px; color: #33475f; line-height: 1.5; padding-left: 28px;">
+            8 weighted signals (P1-P3, I1-I3, R1, Q1) produce a transparent 0-100 score. Hard cap (Score 40) on duplicate photos or geofence breaches. No-GPS cap (Score 79) prevents unverified claims.
+          </p>
+        </div>
+
+        <div style="border-top: 1px solid #e9eff6; padding-top: 14px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+            <span class="badge badge-verified">02</span>
+            <span class="font-serif" style="font-size: 19px; font-weight: 600; color: #0f1b2b;">Code-Level Generative Firewall</span>
+          </div>
+          <p style="font-size: 14px; color: #33475f; line-height: 1.5; padding-left: 28px;">
+            While generic platforms blur the line between AI creation and reality, Pramaan isolates generative tools strictly to Story Studio with visible 'AI-assisted' badges. Evidence layer rejects synthetic pixels.
+          </p>
+        </div>
+
+        <div style="border-top: 1px solid #e9eff6; padding-top: 14px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+            <span class="badge badge-verified">03</span>
+            <span class="font-serif" style="font-size: 19px; font-weight: 600; color: #0f1b2b;">Cryptographic Tamper-Evident Ledger</span>
+          </div>
+          <p style="font-size: 14px; color: #33475f; line-height: 1.5; padding-left: 28px;">
+            Every action (ingest, review, derivative, report) is linked using SHA-256: <code class="font-mono" style="font-size:12px;">entry_hash = sha256(prevHash + event + subject + payload + time)</code>. Retroactive modification breaks the chain visibly.
+          </p>
+        </div>
+
+        <div style="border-top: 1px solid #e9eff6; padding-top: 14px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+            <span class="badge badge-verified">04</span>
+            <span class="font-serif" style="font-size: 19px; font-weight: 600; color: #0f1b2b;">Public Lineage Inspector & Verify QR</span>
+          </div>
+          <p style="font-size: 14px; color: #33475f; line-height: 1.5; padding-left: 28px;">
+            Auditors scan a QR code on any published impact report to inspect the transformation recipe, SHA-256 hashes, parent evidence ID, and ledger audit history back to raw capture.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Right Lineage Inspector Screenshot -->
+      <div class="card-alt" style="padding: 14px;">
+        <img src="real_screenshots/crops/crop_verify.png" alt="Public Lineage Inspector and Verification QR Interface">
+      </div>
+
+    </div>
+
+    <div class="footer-watermark">
+      <span>Pramaan · Verifiable Field Media Pipeline</span>
+      <span>Slide 07 / 08 · Key Differentiators</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 8: IMPACT, VALIDATION & ROADMAP ==================== -->
+  <div class="slide">
+    <div class="header">
+      <div class="category-pill">Validation & Roadmap · Real-World Impact</div>
+      <h1 class="headline">Validated against actual field fraud patterns.</h1>
+      <p class="sublead">Benchmarked against real test cases from the JalSetu Foundation Check Dam JH-04 dataset, detecting 100% of synthetic, recycled, and location-spoofed assets.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1;">
+      
+      <!-- Left: Validation Evidence -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 36px;">
+        <div>
+          <span class="badge badge-verified" style="margin-bottom: 14px;">PROTOTYPE VALIDATION EVIDENCE</span>
+          <h2 class="font-serif" style="font-size: 26px; font-weight: 600; color: #0f1b2b; margin-bottom: 18px;">Jhabua JH-04 Benchmark Suite</h2>
+          
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: #33475f; line-height: 1.5;">
+            <li style="display: flex; gap: 10px;">
+              <span style="color: #16855a; font-weight: bold;">&#10003;</span>
+              <span><strong>20 Seeded Evidence Test Rows:</strong> 14 verified, 2 needs review, 3 flagged, 1 rejected.</span>
+            </li>
+            <li style="display: flex; gap: 10px;">
+              <span style="color: #16855a; font-weight: bold;">&#10003;</span>
+              <span><strong>Screen Recapture Detection:</strong> Caught phone photographing screen displaying check dam (Score 40).</span>
+            </li>
+            <li style="display: flex; gap: 10px;">
+              <span style="color: #16855a; font-weight: bold;">&#10003;</span>
+              <span><strong>Perceptual Hash Deduplication:</strong> Identified recycled photo with bitwise Hamming distance 0 (Score 40).</span>
+            </li>
+            <li style="display: flex; gap: 10px;">
+              <span style="color: #16855a; font-weight: bold;">&#10003;</span>
+              <span><strong>PostGIS Geofence Containment:</strong> Flagged farm pond photo 6,327 m outside site boundaries (Score 40).</span>
+            </li>
+            <li style="display: flex; gap: 10px;">
+              <span style="color: #16855a; font-weight: bold;">&#10003;</span>
+              <span><strong>Missing Metadata Gating:</strong> Capped photo lacking EXIF GPS at 79, routing directly to review queue.</span>
+            </li>
+            <li style="display: flex; gap: 10px;">
+              <span style="color: #16855a; font-weight: bold;">&#10003;</span>
+              <span><strong>14 Automated Consistency Checks Passing:</strong> 100% test coverage across dataset math, pHash distance, and agent graphs.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="font-mono" style="font-size: 13px; color: #0f6b45; border-top: 1px solid #e1f3ea; padding-top: 14px;">
+          VERIFIED: All 14 consistency tests passed (npm run check:demo)
+        </div>
+      </div>
+
+      <!-- Right: Roadmap & Future Scale -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 36px;">
+        <div>
+          <span class="badge badge-sky" style="margin-bottom: 14px;">PRODUCTION EVOLUTION</span>
+          <h2 class="font-serif" style="font-size: 26px; font-weight: 600; color: #0f1b2b; margin-bottom: 18px;">Built Today vs Scaled Tomorrow</h2>
+          
+          <div style="margin-bottom: 22px;">
+            <div style="font-size: 13px; font-weight: 700; color: #0f1b2b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">CURRENT WORKING PROTOTYPE (BUILT)</div>
+            <p style="font-size: 14px; color: #33475f; line-height: 1.55;">
+              • End-to-end evidence pipeline: Capture &rarr; Cloudinary AI &rarr; PostGIS &rarr; Gemini.<br>
+              • 8-signal explainable Trust Engine with dual hard caps.<br>
+              • Generative Firewall blocking synthetic media from evidence.<br>
+              • LangGraph 6-agent workflow with HITL and cited reports.<br>
+              • Cryptographic SHA-256 audit ledger and public QR lineage.
+            </p>
+          </div>
+
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: #235fa0; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">NEXT SCALE & ENTERPRISE DEPLOYMENT (PLANNED)</div>
+            <p style="font-size: 14px; color: #33475f; line-height: 1.55;">
+              • Offline-first PWA background sync (IndexedDB) for zero-connectivity field sites.<br>
+              • Hardware-backed C2PA cryptographic signature embedding (<code class="font-mono" style="font-size:12px;">fl_c2pa</code>).<br>
+              • Enterprise multi-organisation tenant isolation with fine-grained RLS.
+            </p>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid #e9eff6; padding-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+          <span class="font-serif" style="font-size: 17px; font-weight: 600; color: #16855a;">Proof for every photo. Accountability for every rupee.</span>
+          <span class="font-mono" style="font-size: 12px; color: #667b93;">jalsetu-foundation / JH-04</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-watermark">
+      <span>Pramaan · Verifiable Field Media Pipeline</span>
+      <span>Slide 08 / 08 · Impact & Roadmap</span>
+    </div>
+  </div>
+
+</body>
+</html>

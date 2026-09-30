@@ -1,10 +1,28 @@
 export const runtime = "nodejs";
-import { cloudinary } from "@/lib/cloudinary";
+import { cloudinary, isCloudinaryConfigured } from "@/lib/cloudinary";
 
 const ALLOWED_KEYS = new Set(["upload_preset", "timestamp", "folder", "context", "source", "tags"]);
 
+export async function GET() {
+  const configured = isCloudinaryConfigured();
+  return Response.json({
+    configured,
+    cloudName: configured ? process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME : null,
+  });
+}
+
 export async function POST(req: Request) {
   try {
+    if (!isCloudinaryConfigured()) {
+      return Response.json(
+        {
+          error: "Cloudinary credentials are not configured. Please set NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in .env.local to enable direct signed uploads.",
+          configured: false,
+        },
+        { status: 503 }
+      );
+    }
+
     const { paramsToSign } = await req.json();
 
     if (!paramsToSign || typeof paramsToSign !== "object") {
@@ -28,7 +46,7 @@ export async function POST(req: Request) {
       process.env.CLOUDINARY_API_SECRET!
     );
 
-    return Response.json({ signature, apiKey: process.env.CLOUDINARY_API_KEY });
+    return Response.json({ signature, apiKey: process.env.CLOUDINARY_API_KEY, configured: true });
   } catch (err) {
     return new Response(err instanceof Error ? err.message : "Signing failed", { status: 500 });
   }

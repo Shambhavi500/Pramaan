@@ -10,7 +10,7 @@ const DEMO = "https://res.cloudinary.com/demo/image/upload";
 export const CaptureCard = (
   <div className="panel overflow-hidden">
     {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src={`${DEMO}/c_fill,g_auto,w_900,h_420/f_auto/q_auto/samples/landscapes/nature-mountains.jpg`} alt="Example field photo" className="h-52 w-full object-cover" />
+    <img src="/evidence/before_01.jpg" alt="Field capture: Check Dam JH-04" className="h-52 w-full object-cover" />
     <div className="space-y-3 p-5 text-sm">
       <dl className="grid grid-cols-[110px_1fr] gap-x-3 gap-y-2 text-xs">
         <dt className="text-muted">SHA-256</dt>
@@ -93,7 +93,7 @@ try {
 export const AnalysisDerivative = (
   <div className="panel overflow-hidden">
     {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src={`${DEMO}/c_fit,w_1024,h_1024/f_jpg/q_auto:good/samples/landscapes/nature-mountains.jpg`} alt="A 1024 pixel JPEG derivative, rendered live by Cloudinary" className="h-64 w-full object-cover" />
+    <img src="/evidence/after_01.jpg" alt="A 1024 pixel JPEG derivative, rendered for analysis" className="h-64 w-full object-cover" />
     <div className="space-y-2 p-5">
       <p className="font-mono text-[11px] text-soft">t_ev_analysis = c_fit,w_1024,h_1024 / f_jpg / q_auto:good</p>
       <p className="text-xs text-white/75">This exact URL is what gets sent to AI Vision. The original can be many megabytes; the model sees a small JPEG.</p>
@@ -122,7 +122,7 @@ export const VisionJson = (
 export const ReviewCard = (
   <div className="panel overflow-hidden">
     {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src={`${DEMO}/c_fill,w_900,h_380/f_auto/q_auto/samples/people/smiling-man.jpg`} alt="Example review card image" className="h-44 w-full object-cover" />
+    <img src="/evidence/after_recapture.jpg" alt="Example review card: Screen recapture with visible bezel" className="h-44 w-full object-cover" />
     <div className="space-y-3 p-5">
       <div className="flex items-center justify-between">
         <span className="chip bg-bad text-lime-ink">Flagged</span>
