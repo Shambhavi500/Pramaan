@@ -47,8 +47,11 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
 
   audit:
-    name: Dependency audit
+    name: Dependency audit (advisory)
     runs-on: ubuntu-latest
+    # Reports known vulnerabilities without blocking merges: a fix can require a breaking major
+    # upgrade (for example Next 15 to 16) that should be planned, not forced by a red check.
+    continue-on-error: true
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4

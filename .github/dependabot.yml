@@ -5,6 +5,11 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      # Majors need a manual migration (TypeScript 7, react-compare-slider 4, lucide 1.x...).
+      # This also covers Next: upgrade to 16 by merging the already-open PR or by hand.
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     groups:
       minor-and-patch:
         update-types: [minor, patch]
