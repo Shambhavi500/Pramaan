@@ -199,7 +199,7 @@ create table story (
   id text primary key,                  -- st_<ULID>
   org_id uuid references org(id),
   template text, period text, scope jsonb,
-  report jsonb,                         -- Claude structured output
+  report jsonb,                         -- Gemini structured output
   citation_coverage numeric,
   status text check (status in ('draft','published','withdrawn')),
   published_at timestamptz

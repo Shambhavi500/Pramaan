@@ -92,7 +92,7 @@ Assumed demo corpus: **3 NGOs × 2 projects × ~4 sites**, ~**350 images**, **12
 |---|---|---|
 | Vercel | Hobby | $0 (function duration limits: keep steps short; push long work to webhooks/queues) |
 | Supabase | Free (500 MB DB, pgvector, PostGIS; **pauses after 7 days of inactivity**, so keep it warm before Oct 11) | $0 |
-| Claude API | Pay-as-you-go. Default model **Claude Opus 5.5** (`claude-opus-5-5`, $4 / $20 per MTok). ~300 query plans (≈2K in / 0.5K out) + ~40 reports (≈30K in / 4K out) + ~100 pair checks | ≈ $15–30 incl. thinking tokens (≈ $5 plans + $8 reports + $2 pair checks before thinking). Log `response.usage`; prompt caching lowers input cost |
+| Gemini API | Free tier for development; pay-as-you-go on a billing-enabled key. Default model **`gemini-2.5-flash`**. ~300 query plans (≈2K in / 0.5K out) + ~40 reports (≈30K in / 4K out) + ~100 pair checks | Low; free-tier rate limits (~5 RPM) are the practical constraint, so calls are throttled and retried |
 | Voyage AI (`voyage-multimodal-3.5`) | Free allowance (verify) | ≈ $0–2 |
 | Inngest (optional durable jobs) | Free tier | $0 |
 | Domain | optional | ₹0–800 |

@@ -4,7 +4,7 @@
 |---|---|---|---|---|---|
 | 1 | **Missing the 30 Sep HackCulture deadline** | Med | Fatal | Ship the vertical slice by 21:00 on 30 Sep; submit even if rough; iterate after | All |
 | 2 | **Credits exhausted during judging** (Free: 25/month) | Med | High | Budget (`02_cloudinary/06`), cost panel, no video AI-crop/ABR, ≤10 GenAI transforms, eager pre-generation, freeze corpus by 9 Oct; ask DevRel for a boost | B |
-| 3 | **Add-on quotas too small** (AI Vision/Content Analysis/OCR) | Med | High | Check quotas on day 0; one AI Vision call per image with a combined JSON schema; 1024-px inputs; cache results; fallback to Claude vision on the same Cloudinary URL | C |
+| 3 | **Add-on quotas too small** (AI Vision/Content Analysis/OCR) | Med | High | Check quotas on day 0; one AI Vision call per image with a combined JSON schema; 1024-px inputs; cache results; fallback to Gemini vision on the same Cloudinary URL | C |
 | 4 | Beta features not granted (C2PA, Duplicate Detection) | High | Low | Designed as pluggable; our pHash index + ledger + verify page stand alone | B |
 | 5 | Search Tier 2 / Visual Search unavailable | Certain | Med | SMD mirrors (capture_date, lat/lng e6) + PostGIS + pgvector hybrid | C |
 | 6 | `eval`/`on_success` script edge cases (tag/context formats, EXIF key names) | Med | Med | Log real `resource_info` payloads first; keep scripts minimal; duplicate logic in webhook job | B |

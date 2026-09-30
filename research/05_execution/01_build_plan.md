@@ -10,7 +10,7 @@
 |---|---|---|
 | **A · Frontend/UX** | Next.js pages, PWA capture + offline queue, map/timeline, slider, Studio UI, verify page | Polished, mobile-first UI; demo flow |
 | **B · Cloudinary pipeline** | Presets, SMD schema, `eval`, webhooks, URL builders + classifier, composites/reels/PDF/social kit, MediaFlows, MCP setup | Integration blueprint implemented; `PROMPTS.md` entries |
-| **C · AI & trust** | AI Vision schema/prompts, trust engine, pHash index, embeddings, Claude planner/report/Copilot, evaluation set & metrics | Trust v1 + eval numbers; report quality |
+| **C · AI & trust** | AI Vision schema/prompts, trust engine, pHash index, embeddings, Gemini planner/report/Copilot, evaluation set & metrics | Trust v1 + eval numbers; report quality |
 | **D · Product, data & story** | Interviews, taxonomy, seed corpus capture (with GPS), labeled fraud set, README, video, LinkedIn posts, forms, pitch deck | Submission-ready narrative & assets |
 
 Solo/duo fallback: B+C merge (pipeline+AI), A+D merge (UI+story).
@@ -49,7 +49,7 @@ gantt
 
 ### Day 0 · Tue 29 Sep (tonight): foundation (3–4 h)
 - [ ] Create Cloudinary account (default region) **or** use a Claimable Cloud via AI Power Start, then claim it.
-- [ ] `npx create-cloudinary-next` (Claude Code + Cursor) → `pramaan/`; push to a **public GitHub repo** with a first commit ("scaffold from create-cloudinary-next").
+- [ ] `npx create-cloudinary-next` (Cursor) → `pramaan/`; push to a **public GitHub repo** with a first commit ("scaffold from create-cloudinary-next").
 - [ ] Install Skills (`npx skills add cloudinary-devs/skills`); paste **AI Power Start** prompt; commit `docs/cloudinary-environment.json` + preview HTML.
 - [ ] Console: enable auto-backup, **PDF/ZIP delivery**, subscribe Free tiers (AI Vision, Content Analysis, OCR, Google Tagging, Google Translation); record quotas in `docs/quotas.md`.
 - [ ] File support tickets: C2PA beta, Duplicate Detection beta; ask DevRel on Discord for a hackathon credit boost.
@@ -72,13 +72,13 @@ gantt
 - [ ] D: build the labeled fraud set (recaptures, recycled, synthetic via Cloudinary Image Generation, wrong location).
 
 ### Day 3 · Fri 2 Oct: find & compare
-- [ ] C: planner (Claude structured output) + compiler → Cloudinary Search API; PostGIS geo; "why matched".
+- [ ] C: planner (Gemini structured output) + compiler → Cloudinary Search API; PostGIS geo; "why matched".
 - [ ] B: composite URL builder, flip GIF, pair approval → `add_related_assets`; AI Vision on composite; ExG metric.
 - [ ] A: search page + compare page (slider).
 - [ ] D: record a **draft 3-min walkthrough**; draft Cloudinary form answers.
 
 ### Day 4 · Sat 3 Oct: tell (+ online checkpoint)
-- [ ] C: report synthesis (Claude `messages.parse` + Zod) with citation validation.
+- [ ] C: report synthesis (Gemini structured output + Zod) with citation validation.
 - [ ] B: evidence cards → materialize → `multi` PDF; verify page + QR overlays.
 - [ ] A: Studio wizard (scope → evidence → generate → preview).
 - [ ] **Submit the Cloudinary Google Form** (Code Cubicle 2026) with live URL, repo, and video. Update later if allowed.

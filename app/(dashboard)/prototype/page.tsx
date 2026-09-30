@@ -21,7 +21,7 @@ const STAGES = [
     stage: "Compare, discover, prove",
     items: [
       { href: "/compare/pair_01", title: "Compare", desc: "Same site, two dates, side by side with the measured change and the method stated.", uses: "c_fill · g_auto · f_auto · q_auto" },
-      { href: "/discover", title: "Discover", desc: "Ask in plain language. See how the question was interpreted and why each result matched.", uses: "Claude planner · Cloudinary Search API" },
+      { href: "/discover", title: "Discover", desc: "Ask in plain language. See how the question was interpreted and why each result matched.", uses: "Gemini planner · Cloudinary Search API" },
       { href: "/claims", title: "Impact", desc: "How strongly the verified evidence supports each claim, and which evidence is still missing.", uses: "Coverage scoring · claim to evidence links" },
     ],
   },

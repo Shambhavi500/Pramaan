@@ -77,7 +77,7 @@ Panels:
 
 ## 6. Search: `/search` · P0 (semantic P1)
 
-- **NL bar** → Claude query planner returns a validated plan: `{cloudinary_expression, semantic_query, geo, time, sort, explanation}` → executed as a hybrid (Cloudinary Search API ∩ PostGIS ∩ pgvector) → results with **"why matched"** chips (e.g. `activity=check_dam`, `2.1 km from Jhabua`, `semantic 0.82: "stone check dam across dry stream"`).
+- **NL bar** → Gemini query planner returns a validated plan: `{cloudinary_expression, semantic_query, geo, time, sort, explanation}` → executed as a hybrid (Cloudinary Search API ∩ PostGIS ∩ pgvector) → results with **"why matched"** chips (e.g. `activity=check_dam`, `2.1 km from Jhabua`, `semantic 0.82: "stone check dam across dry stream"`).
 - **Facets**: project, site, activity, SDG, phase, date range, trust status, media type, has people, consent.
 - **Find similar**: from any evidence → embedding kNN (+ pHash for near-duplicates).
 - Details in `09_search_and_discovery.md`.
@@ -94,7 +94,7 @@ Panels:
 Wizard:
 1. **Choose scope**: project(s), period, audience template (CSR partner quarterly, Govt stage report, Social campaign, Annual report).
 2. **Evidence selection**: auto-selects verified evidence ranked by relevance/quality/diversity; user can pin/unpin. **Only `verified` evidence is eligible** (policy).
-3. **Generate**: Claude drafts a structured report (sections, key numbers, claims **each citing evidence IDs**), captions and social copy (EN + HI).
+3. **Generate**: Gemini drafts a structured report (sections, key numbers, claims **each citing evidence IDs**), captions and social copy (EN + HI).
 4. **Render** via Cloudinary: PDF evidence pack (`multi` on tag `pack_<storyId>`), 4 social formats, 20-s reel, public story page with OG image; consent redaction applied automatically; "Verify" QR on every visual.
 5. **Review & publish**: diff view of claims vs. evidence; publish writes ledger entries and marks derivatives as `published`.
 
@@ -119,14 +119,14 @@ Details in `10_impact_story_studio.md`.
 | Sites | Draw geofences (MapLibre draw) or point + radius; site codes |
 | Consent | Consent records (per person / per event), link to assets; withdrawal flow |
 | Policies | Trust thresholds, pHash distance threshold, public redaction policy, GenAI allowance |
-| Cost panel | Cloudinary `usage` (credits, tx, storage, bandwidth), add-on quotas from `limits.addons_quota`, Claude token usage |
+| Cost panel | Cloudinary `usage` (credits, tx, storage, bandwidth), add-on quotas from `limits.addons_quota`, Gemini token usage |
 | Pipeline health | Webhook log, job statuses, failures/retries |
 | Cloudinary setup check | Verifies SMD fields, presets, named transformations, webhooks exist (created via MCP; this screen proves it) |
 
 ## 12. Evidence Copilot (runtime agent): side panel · P1
 
 - Chat panel available on project/search pages: *"Which sites have no after-photos yet?"*, *"Draft a 150-word update on Bhil Khedi check dam with the best before/after"*, *"Why was ev_… flagged?"*
-- Implemented as Claude + tools that call Cloudinary (search, get asset, analyze, build composite, relate, create PDF pack) and our DB. Human-in-the-loop: write actions (relate, publish) require confirmation.
+- Implemented as Gemini + tools that call Cloudinary (search, get asset, analyze, build composite, relate, create PDF pack) and our DB. Human-in-the-loop: write actions (relate, publish) require confirmation.
 
 ## 13. Non-functional requirements
 

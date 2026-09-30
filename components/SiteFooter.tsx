@@ -11,7 +11,7 @@ export function SiteFooter() {
             endorsed by Cloudinary.
           </p>
         </div>
-        <p className="font-light">Next.js · Cloudinary · Supabase · Claude</p>
+        <p className="font-light">Next.js · Cloudinary · Supabase · Gemini</p>
       </div>
     </footer>
   );

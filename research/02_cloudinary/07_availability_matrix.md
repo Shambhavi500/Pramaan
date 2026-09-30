@@ -15,15 +15,15 @@ Legend: ✅ Free, self-serve · 🟡 add-on free tier (quota) · 🔶 Beta, self
 | Search API Tier 1 | ✅ | – | Faceted search | – |
 | **Search API Tier 2** (`location`, `taken_at`, `image_metadata`, `colors`, `face_count`, aggregations) | 🔒 Advanced+ on request | Paid plan + request | Would enable native geo/EXIF search | **Copy GPS/date/etc. into SMD at ingest** (`lat_e6`, `lng_e6`, `capture_date`, `green_pct`…) + PostGIS for true geo queries |
 | **Visual Search** (image/text) | 🔒 Enterprise | Sales | Semantic discovery | **Voyage multimodal embeddings + pgvector** over (image + AI caption) |
-| DAM AI Agents (Taxonomy/Search/Workflow) | 🔒 Assets Enterprise, beta | CSM | – | Our in-app **Evidence Copilot** (Claude + Cloudinary tools) |
+| DAM AI Agents (Taxonomy/Search/Workflow) | 🔒 Assets Enterprise, beta | CSM | – | Our in-app **Evidence Copilot** (Gemini + Cloudinary tools) |
 | People Search | 🔒 Assets Enterprise | – | Not used (ethics) | – |
-| AI Vision (tagging/general/moderation, JSON output) | 🟡 | Console → Add-ons → Free tier | Core perception | Claude vision over the same Cloudinary-delivered 1024-px URL (keeps Cloudinary as the image pipeline) |
+| AI Vision (tagging/general/moderation, JSON output) | 🟡 | Console → Add-ons → Free tier | Core perception | Gemini vision over the same Cloudinary-delivered 1024-px URL (keeps Cloudinary as the image pipeline) |
 | Content Analysis (captioning, LVIS/COCO, IQA, watermark, cld_text) | 🟡 | Add-on free tier | Captions, objects, watermark | AI Vision schema covers captions/counts |
 | OCR (`adv_ocr`, `g_ocr_text` redaction) | 🟡 | Add-on free tier | Signboards, text redaction | AI Vision `visible_text`; manual region blur (`e_blur_region` with x,y,w,h) |
 | Google auto-tagging / logo detection | 🟡 | Add-on free tier | Generic labels, sponsor logos | AI Vision |
-| Google Translation (transcript translation) | 🟡 | Add-on free tier | Hindi → English captions | Claude translation of `.transcript` text → our own VTT |
+| Google Translation (transcript translation) | 🟡 | Add-on free tier | Hindi → English captions | Gemini translation of `.transcript` text → our own VTT |
 | Auto transcription / auto chaptering | ✅ (not AP region) | – | Video evidence | – |
-| Auto video details (AI title/desc/tags) | ✅ (1 tx/s) | – | Video cataloging | Claude summary of transcript |
+| Auto video details (AI title/desc/tags) | ✅ (1 tx/s) | – | Video cataloging | Gemini summary of transcript |
 | **AI Video Analysis** (visual transcript) | 🔶 | Self-serve API (20 tx/s) | Visual understanding of video | Keyframes (`so_t`) → AI Vision |
 | **Duplicate Image Detection** add-on | 📨 Beta | Support ticket | Native near-dup | **pHash Hamming index in Postgres** (works on Free) |
 | **Content Provenance / C2PA** (`fl_c2pa`) | 📨 Beta | Support ticket ("available only to customers who request it") | Signed Content Credentials on published images | Our own hash-chained ledger + public verify page + QR (works everywhere); mark C2PA as "enabled when granted" |

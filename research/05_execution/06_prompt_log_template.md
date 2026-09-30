@@ -7,7 +7,7 @@
 ## Format
 ```markdown
 ### P-017 · 2026-09-30 · Structured metadata schema via MCP
-- Tool/model: Claude Code (Claude Opus 5.5) + cloudinary-smd MCP
+- Tool/model: Cursor + cloudinary-smd MCP
 - Skill(s) active: cloudinary-docs
 - Prompt:
   > Using the structured-metadata MCP, create the 17 fields in cloudinary/smd-fields.json exactly…
@@ -19,7 +19,7 @@
 1. **Setup**: AI Power Start run; kit choices; MCP auth.
 2. **Cloudinary configuration via MCP**: SMD fields/rules, presets, named transformations, webhooks, MediaFlows flow.
 3. **Transformation authoring with the Skills Pack**: composite, stamps, reel splice, subtitles, social crops, redaction, and cases where the skill's self-validation checklist caught an error (e.g. `g_auto` with `c_scale`, `b_` as a qualifier, `f_auto:video`).
-4. **Runtime prompts**: AI Vision evidence prompt + schema versions (v1→v3 and why); comparison-on-composite prompt; AI Video Analysis prompt; Claude planner system prompt; report synthesis system prompt; Copilot tool descriptions.
+4. **Runtime prompts**: AI Vision evidence prompt + schema versions (v1→v3 and why); comparison-on-composite prompt; AI Video Analysis prompt; Gemini planner system prompt; report synthesis system prompt; Copilot tool descriptions.
 5. **Evaluation prompts**: test-set generation with Cloudinary Image Generation (clearly labeled synthetic).
 6. **Debugging prompts**: X-Cld-Error investigations, webhook signature issues.
 

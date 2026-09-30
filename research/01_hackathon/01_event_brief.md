@@ -112,7 +112,7 @@ Form: "Cloudinary Challenge Hackathon Survey". Fields marked * are required.
 | 11 | Rate the Skills Pack | 1–5 | |
 | 12 | **If you used prompt engineering to build, what prompts did you try?*** | Long text | Keep a prompt log from day 1 (`05_execution/06_prompt_log.md`) |
 | 13 | Public link to a recording walking through your project | Text | 2–4 min video (YouTube unlisted / Loom) |
-| 14 | AI model(s) used to build | Text | e.g. Claude Opus 5.5 in Claude Code/Cursor + runtime models |
+| 14 | AI model(s) used to build | Text | e.g. Cursor + runtime models |
 | 15 | Interested in follow-up conversation?* | Yes/No | **Yes.** A route to being featured. |
 
 > This form doubles as **product research for Cloudinary's new AI developer tools** (it asks for ratings of the kits and Skills, the prompts, and the models). Thoughtful, specific feedback here signals the kind of engaged builder their DevRel team rewards. See `03_judging_and_what_cloudinary_wants.md`.

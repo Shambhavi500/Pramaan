@@ -21,7 +21,7 @@ Plus **near-duplicate** lookup (pHash Hamming) for "find copies of this photo" a
 sequenceDiagram
   participant U as User
   participant API as /api/search
-  participant CL as Claude (planner, effort low)
+  participant CL as Gemini (planner, effort low)
   participant GZ as Gazetteer (PostGIS sites/villages)
   participant CS as Cloudinary Search API
   participant PG as Postgres (PostGIS + pgvector)

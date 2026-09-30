@@ -47,13 +47,13 @@
 | [`04_solution/02_feature_spec.md`](04_solution/02_feature_spec.md) | Screen-by-screen spec (capture, import, evidence, review, dashboard, search, compare, studio, verify, admin, copilot), NFRs |
 | [`04_solution/03_system_architecture.md`](04_solution/03_system_architecture.md) | Component diagram, ingest & story sequences, async jobs, webhook handling, security, scaling, deployment |
 | [`04_solution/04_cloudinary_integration_blueprint.md`](04_solution/04_cloudinary_integration_blueprint.md) | **26-row integration map**, account settings, SMD schema, presets + `eval` gate, named transformations, code sketches, URL recipes, player, MediaFlows, MCP setup prompts |
-| [`04_solution/05_ai_pipeline_design.md`](04_solution/05_ai_pipeline_design.md) | Perception vs. reasoning split, AI Vision prompt, **Trust Score algorithm**, pHash index, evaluation plan, Claude planner/report/Copilot, embeddings, safety |
+| [`04_solution/05_ai_pipeline_design.md`](04_solution/05_ai_pipeline_design.md) | Perception vs. reasoning split, AI Vision prompt, **Trust Score algorithm**, pHash index, evaluation plan, Gemini planner/report/Copilot, embeddings, safety |
 | [`04_solution/06_data_model.md`](04_solution/06_data_model.md) | Cloudinary conventions, ER diagram, full Postgres DDL, field ownership, RLS |
 | [`04_solution/07_evidence_integrity_and_traceability.md`](04_solution/07_evidence_integrity_and_traceability.md) | Immutable originals, derivative classifier, **generative firewall**, hash-chained ledger, verify page + QR, C2PA plan, consent/redaction |
 | [`04_solution/08_before_after_engine.md`](04_solution/08_before_after_engine.md) | Pairing algorithm, repeat-photography ghost overlay, 6 presentation formats, AI-on-composite, ExG metric |
 | [`04_solution/09_search_and_discovery.md`](04_solution/09_search_and_discovery.md) | Hybrid search (Cloudinary Search + PostGIS + pgvector), planner→compiler, fusion, "why matched", eval |
 | [`04_solution/10_impact_story_studio.md`](04_solution/10_impact_story_studio.md) | Templates, evidence selection, cited generation, Cloudinary rendering (cards, PDF, social, reels, pages), impact & coverage metrics |
-| [`04_solution/11_tech_stack.md`](04_solution/11_tech_stack.md) | Stack with rationale & alternatives, Claude API specifics, repo layout, env vars, "why not X" |
+| [`04_solution/11_tech_stack.md`](04_solution/11_tech_stack.md) | Stack with rationale & alternatives, Gemini API specifics, repo layout, env vars, "why not X" |
 | [`04_solution/12_privacy_safety_ethics.md`](04_solution/12_privacy_safety_ethics.md) | Principles, DPDP alignment, redaction matrix, AI ethics, fraud-detection ethics, security checklist, responsible GenAI |
 
 ### 05 · Execution

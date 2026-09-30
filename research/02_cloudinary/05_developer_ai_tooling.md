@@ -12,8 +12,8 @@
 | Version | **1.0.0** (GA 21 May 2026) | **1.0.0-beta.4** (29 Jul 2026) |
 | Stack scaffolded | React 19 + **Vite 6** + TS 5.9; `@cloudinary/react` ^1.14.3, `@cloudinary/url-gen` ^1.22.0 | **Next 16.2.7** (App Router) + React 19.2.4 + **`next-cloudinary` ^6.18.8** + Tailwind 4 + TS 5 (via `create-next-app --example cloudinary-devs/create-cloudinary-next-template`) |
 | Files of note | `src/cloudinary/config.ts`, `src/cloudinary/UploadWidget.tsx`, `src/App.tsx` (AdvancedImage + fill/autoGravity + f_auto/q_auto), **`.cursorrules`** (long React-SDK rules incl. "golden rule" import table), `.env` / `.env.example`, `.cursor/mcp.json` | `app/page.tsx` (`CldUploadWidget` + `CldImage`), `.env.local` (`NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`, optional `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`, commented `NEXT_PUBLIC_CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET`) |
-| AI config | Cursor rules + MCP | **Skills installed into `.claude/skills/` (Claude Code) and/or `.agents/skills/` (Cursor/Copilot/generic)**: `cloudinary-next`, `cloudinary-docs`, `cloudinary-transformations` (cloned live from `cloudinary-devs/skills`, with bundled fallbacks); **`.mcp.json`** (Claude) / **`.cursor/mcp.json`** (Cursor) with remote `cloudinary-asset-mgmt` + `cloudinary-env-config` |
-| Headless | – | `npx create-cloudinary-next --headless --cloudName <c> --projectName pramaan --aiTools claude --aiTools cursor --packageManager pnpm` |
+| AI config | Cursor rules + MCP | **Skills installed into `.agents/skills/` (Cursor/Copilot/generic)**: `cloudinary-next`, `cloudinary-docs`, `cloudinary-transformations` (cloned live from `cloudinary-devs/skills`, with bundled fallbacks); **`.cursor/mcp.json`** (Cursor) with remote `cloudinary-asset-mgmt` + `cloudinary-env-config` |
+| Headless | – | `npx create-cloudinary-next --headless --cloudName <c> --projectName pramaan --aiTools cursor --packageManager pnpm` |
 | Why for us | – | **Server routes** for signed uploads, webhooks, AI calls, and secrets; Server Actions; `getCldOgImageUrl` for share cards; Vercel deploy |
 
 > The kit's landing page includes "click-to-copy prompts" ("Create an image gallery with lazy loading…", "Add image overlays with text or logos"). Screenshot the first run for the README to show we started from the kit.
@@ -21,7 +21,7 @@
 
 ## 2. Skills Pack (`cloudinary-devs/skills`)
 
-Install: `npx skills add cloudinary-devs/skills` (all) or `--skill cloudinary-docs,cloudinary-transformations` / `--skill cloudinary-next`. Global or per-project. Works with Claude, Cursor, Codex, ChatGPT, custom agents.
+Install: `npx skills add cloudinary-devs/skills` (all) or `--skill cloudinary-docs,cloudinary-transformations` / `--skill cloudinary-next`. Global or per-project. Works with Cursor, Codex, ChatGPT, custom agents.
 
 | Skill | Content (what it teaches the agent) | Where it helps us |
 |---|---|---|
@@ -54,7 +54,7 @@ npx -y @cloudinary/structured-metadata mcp start
 npx -y @cloudinary/analysis mcp start
 # env: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET (Node 18+)
 ```
-Claude Code: `claude mcp add --transport http cloudinary-asset-mgmt https://asset-management.mcp.cloudinary.com/mcp` (docs show `--transport sse`), then `/mcp` to authenticate. Or `/plugin install cloudinary@claude-plugins-official` (Skills + all remote MCP servers).
+Cursor: add `https://asset-management.mcp.cloudinary.com/mcp` as a remote MCP server in `.cursor/mcp.json`, then authenticate.
 
 ### 3.3 Tool inventory (from the packages' READMEs)
 
@@ -66,11 +66,11 @@ Claude Code: `claude mcp add --transport http cloudinary-asset-mgmt https://asse
 
 ### 3.4 How we'll use MCP (two layers; show both to judges)
 1. **Dev-time (IDE agent)**: create the SMD schema, upload presets (with `eval`/`on_success`, add-ons, notification URL), named transformations (`t_evidence_thumb`, `t_public_safe`, `t_social_1x1` …), webhook triggers, and a MediaFlows PowerFlow, **all by prompt**. Log every prompt (the form asks).
-2. **Runtime (in-app agent, "Evidence Copilot")**: Claude with tools that wrap the Cloudinary SDK / Analysis SDK (search, get asset, analyze, relate, build composite URL, create PDF pack). This follows Cloudinary's "AI agents" direction (DAM Search/Taxonomy/Workflow agents are Enterprise-only; we give NGOs the same pattern on the free tier). See `04_solution/05_ai_pipeline_design.md`.
+2. **Runtime (in-app agent, "Evidence Copilot")**: Gemini with tools that wrap the Cloudinary SDK / Analysis SDK (search, get asset, analyze, relate, build composite URL, create PDF pack). This follows Cloudinary's "AI agents" direction (DAM Search/Taxonomy/Workflow agents are Enterprise-only; we give NGOs the same pattern on the free tier). See `04_solution/05_ai_pipeline_design.md`.
 
 ## 4. AI Power Start prompt (docs: `ai_powerstart`, canonical file `documentation/prompts/cloudinary-get-started-prompt.md`)
 
-Paste into any AI IDE (Cursor, Claude, Antigravity, Copilot). It runs **five gated stages** and pauses for approval at each:
+Paste into any AI IDE (Cursor, Antigravity, Copilot). It runs **five gated stages** and pauses for approval at each:
 
 | Stage | What happens |
 |---|---|
@@ -89,13 +89,13 @@ After setup it suggests next prompts ("Social sizes for every channel", "A consi
 - **`cloudinary_transformation_rules.md`**: rules-based markdown to generate hallucination-free transformation URLs.
 - **Context7** MCP: append "use context7" to prompts for up-to-date examples.
 - **VS Code / Cursor extension** (GA Jul 2026; OpenVSX): browse/search/upload Media Library, copy URLs/public IDs in the IDE.
-- **Claude plugin** (claude.com/plugins/cloudinary), **Cursor plugin**, ChatGPT/Codex plugins (Asset Management MCP).
+- **Cursor plugin**, ChatGPT/Codex plugins (Asset Management MCP).
 - **Base44** no-code integration; **n8n** Cloudinary node.
 - **Cloudinary CLI** `cld` (pipx/uv/Docker), `cld login`, `cld agent signup`.
 - **Agents: start here** (`agents_start_here`): provisioning, credential safety, tool loading.
 
 ## 6. Recommended setup sequence (commands in `05_execution/02_repo_setup.md`)
-1. `npx create-cloudinary-next` → choose **Claude Code + Cursor** (and Copilot if used) → writes skills + MCP configs.
+1. `npx create-cloudinary-next` → choose **Cursor** (and Copilot if used) → writes skills + MCP configs.
 2. `npx skills add cloudinary-devs/skills` (ensure all four, incl. `cloudinary-docs`).
 3. Paste the **AI Power Start** prompt → complete 5 stages → commit `docs/` artifacts.
 4. Add the **Structured Metadata** and **MediaFlows** MCP servers (and local Analysis server) to `.mcp.json`.

@@ -1,7 +1,7 @@
 # 10 · Impact Story Studio (PS goal R4 + "measurable impact")
 
 > *"Generate visual reports, summaries, and campaign-ready content from collected evidence."*
-> Story Studio turns **verified** evidence into audience-specific outputs. Claude writes; Cloudinary renders; the ledger records. Every output carries a Verify QR.
+> Story Studio turns **verified** evidence into audience-specific outputs. Gemini writes; Cloudinary renders; the ledger records. Every output carries a Verify QR.
 
 ---
 
@@ -21,7 +21,7 @@
 - Diversity via greedy MMR over embeddings (avoid 10 near-identical plantation shots).
 - User can pin/unpin; the bundle is frozen with its hash into the ledger at generation time.
 
-## 3. Generation (Claude, structured output)
+## 3. Generation (Gemini, structured output)
 - Input bundle: evidence items (id, caption/scene_summary, activity, counts, site, date, trust, pair metrics with methods), indicators (target/claimed/evidence-backed), transcript excerpts (consented), org voice/brand notes, template spec.
 - Output: `Report` schema (`05_ai_pipeline_design.md` §4.2): sections with **per-paragraph `evidence_ids`**, key metrics with `method`, captions EN + HI + alt, social copy, limitations.
 - Post-validate citations → **citation coverage %** shown in the Studio ("97% of factual sentences cite verified evidence").

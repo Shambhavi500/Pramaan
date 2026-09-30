@@ -147,7 +147,7 @@ export default function StoryPage() {
           {[
             { t: "Cloudinary is the engine", d: "It stores and versions the photo, reads its metadata, hashes its pixels, finds faces, judges focus, runs AI Vision and delivers every derivative." },
             { t: "The database is the memory", d: "Supabase holds evidence, reviews, pairs and stories. PostGIS answers “was this inside the fence?” and Postgres compares pHashes bit by bit." },
-            { t: "Claude only reads records", d: "It plans searches and drafts reports from verified rows. It never sees a photo as evidence and never decides a trust score." },
+            { t: "Gemini only reads records", d: "It plans searches and drafts reports from verified rows. It never sees a photo as evidence and never decides a trust score." },
           ].map((c) => (
             <div key={c.t} data-reveal className="panel-flat p-6">
               <h3 className="mb-2 text-xl font-normal">{c.t}</h3>
@@ -348,7 +348,7 @@ export default function StoryPage() {
           steps={[
             {
               kicker: "Search",
-              title: "Claude plans, the server checks, Cloudinary searches",
+              title: "Gemini plans, the server checks, Cloudinary searches",
               body: (
                 <>
                   <p>A sentence becomes a small structured plan. The server keeps only fields and values on an allowlist before building the Cloudinary Search expression, so the model can suggest a query but cannot inject one.</p>
@@ -360,7 +360,7 @@ export default function StoryPage() {
               title: "No citation, no claim",
               body: (
                 <>
-                  <p>Story synthesis sends Claude only verified evidence and demands an evidence ID on every paragraph. Then the server checks the IDs itself, drops any that were invented and stores the share of paragraphs that are properly cited.</p>
+                  <p>Story synthesis sends Gemini only verified evidence and demands an evidence ID on every paragraph. Then the server checks the IDs itself, drops any that were invented and stores the share of paragraphs that are properly cited.</p>
                 </>
               ),
             },
@@ -418,7 +418,7 @@ export default function StoryPage() {
           <div data-reveal className="panel space-y-3 p-6">
             <span className="chip bg-warn text-lime-ink">Not yet proven</span>
             <ul className="space-y-2 text-sm font-light text-white/85">
-              <li>It type-checks and builds, but has not yet run end to end against live Cloudinary, Supabase and Anthropic accounts</li>
+              <li>It type-checks and builds, but has not yet run end to end against live Cloudinary, Supabase and Gemini accounts</li>
               <li>Cloudinary moderation may need a different call than the one first tried; the code has a fallback</li>
               <li>The review screen has no login yet</li>
               <li>Demo images on this page come from Cloudinary&apos;s public sample cloud</li>

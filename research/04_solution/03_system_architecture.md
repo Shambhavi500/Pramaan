@@ -1,6 +1,6 @@
 # 03 · System Architecture
 
-> Principle: **Cloudinary does the media work (store, perceive, transform, deliver, lineage). Postgres keeps the relational and derived state (projects, sites, trust, embeddings, ledger). Claude does cross-asset reasoning (planning, comparison, narrative).** Next.js on Vercel orchestrates.
+> Principle: **Cloudinary does the media work (store, perceive, transform, deliver, lineage). Postgres keeps the relational and derived state (projects, sites, trust, embeddings, ledger). Gemini does cross-asset reasoning (planning, comparison, narrative).** Next.js on Vercel orchestrates.
 
 ---
 
@@ -20,7 +20,7 @@ flowchart TB
     PIPE["Pipeline workers<br/>(Inngest functions or route handlers + after())"]
     SRCH["/api/search (planner + hybrid exec)"]
     STORY["/api/stories (generate · render · publish)"]
-    AGENT["/api/copilot (Claude tool runner)"]
+    AGENT["/api/copilot (LangGraph agent)"]
     VER["/api/verify/:id (provenance)"]
   end
 
@@ -40,7 +40,7 @@ flowchart TB
   end
 
   subgraph AI["External AI"]
-    CL["Claude API (claude-opus-5-5)<br/>planner · comparison · report synthesis · copilot"]
+    CL["Gemini API (gemini-2.5-flash)<br/>planner · comparison · report synthesis · copilot"]
     VO["Voyage multimodal embeddings"]
   end
 
@@ -112,12 +112,12 @@ sequenceDiagram
   participant U as Comms / M&E user
   participant A as /api/stories
   participant DB as Postgres
-  participant CL as Claude
+  participant CL as Gemini
   participant C as Cloudinary
   U->>A: generate(project, period, template)
   A->>DB: select verified evidence + pairs + indicators (+ consent)
   A->>A: build evidence bundle JSON (ids, captions, counts, dates, sites, metrics)
-  A->>CL: messages.parse(structured report schema, evidence bundle, template)
+  A->>CL: generateStructured(structured report schema, evidence bundle, template)
   CL-->>A: report {sections[], claims[{text, evidence_ids[]}], captions, social_copy}
   A->>A: validate every evidence_id exists & is verified (reject/repair otherwise)
   A->>C: tag selected assets pack_{storyId}, then multi(tag, format pdf, transformation t_pack_page)
@@ -155,14 +155,14 @@ Implementation options: **Inngest** (durable steps, retries, free tier) is recom
 
 | Concern | Control |
 |---|---|
-| Secrets | `CLOUDINARY_API_SECRET`, `ANTHROPIC_API_KEY`, `VOYAGE_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY` server-only; never `NEXT_PUBLIC_*` (Skills rule) |
+| Secrets | `CLOUDINARY_API_SECRET`, `GEMINI_API_KEY`, `VOYAGE_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY` server-only; never `NEXT_PUBLIC_*` (Skills rule) |
 | Upload abuse | **Signed uploads only**; preset restricts formats, max size, folder; per-user rate limit on `/api/sign-upload` |
 | Tenant isolation | Supabase RLS by `org_id`; Cloudinary asset folders per org; Search expressions always ANDed with `metadata.org_id=<org>` server-side |
-| Search injection | Claude planner output validated against a **whitelist grammar** (allowed fields/operators) before execution |
+| Search injection | Gemini planner output validated against a **whitelist grammar** (allowed fields/operators) before execution |
 | Original protection (P1) | Store originals as `type: authenticated`; serve via **signed URLs** (`sign_url: true`); public outputs only through named transformations with redaction |
 | URL tampering (prod) | Enable **Strict transformations** (only named/eager transformations served) once templates are final |
 | Webhook spoofing | Signature + timestamp verification |
-| Prompt injection via images (e.g. text in a photo saying "ignore instructions") | Treat AI outputs as **data**; Claude prompts wrap evidence as quoted JSON; tools that write require human confirmation |
+| Prompt injection via images (e.g. text in a photo saying "ignore instructions") | Treat AI outputs as **data**; Gemini prompts wrap evidence as quoted JSON; tools that write require human confirmation |
 | PII | Face/minor flags; redaction policy; location coarsening on public pages; consent withdrawal → `invalidate: true` on derived + unpublish |
 
 ## 7. Scaling considerations (answer to "is it scalable?")
@@ -183,5 +183,5 @@ Implementation options: **Inngest** (durable steps, retries, free tier) is recom
 | Postgres + Auth + Realtime + Storage (consent docs) | Supabase (Free) | Enable `postgis`, `vector`; keep warm (pauses after 7 days idle) |
 | Jobs | Inngest Cloud (Free) or Vercel Cron | |
 | Media | Cloudinary (Free, default US region) | Not Asia-Pacific (transcription/chaptering unsupported there) |
-| AI | Anthropic API, Voyage API | Keys in Vercel env |
+| AI | Gemini API | Keys in Vercel env |
 | Optional automation | MediaFlows (flag alerts to Slack/email), n8n (WhatsApp bridge) | |

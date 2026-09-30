@@ -111,7 +111,7 @@ flowchart LR
   V --> A[AI Video Analysis<br/>visual transcript per segment]
   A --> K[Keyframes at segment midpoints<br/>/video/upload/so_t/id.jpg]
   K --> AV[AI Vision JSON on keyframes]
-  T & C & D & A & AV --> L[Claude: video evidence summary<br/>+ claims with timestamps]
+  T & C & D & A & AV --> L[Gemini: video evidence summary<br/>+ claims with timestamps]
   L --> P[Video Player: chapters + bilingual captions + evidence timeline]
 ```
 
@@ -138,13 +138,13 @@ flowchart LR
 
 | Gap | Why | Our component |
 |---|---|---|
-| Cross-asset reasoning (compare 2+ images, reason over a project) | AI Vision takes one `source` | Claude over multiple Cloudinary URLs, **or** Cloudinary composite → AI Vision (trick in §9) |
+| Cross-asset reasoning (compare 2+ images, reason over a project) | AI Vision takes one `source` | Gemini over multiple Cloudinary URLs, **or** Cloudinary composite → AI Vision (trick in §9) |
 | Semantic/vector search on Free | Visual Search is Enterprise | Embeddings (Voyage multimodal) + pgvector |
 | Geo/EXIF-date search on Free | Search Tier 2 is premium | Copy to SMD (`capture_date`, `lat_e6`, `lng_e6`) + PostGIS |
 | Tamper-evident audit log | Not a Cloudinary feature | Hash-chained ledger in Postgres |
 | Trust scoring | Signals exist but are spread across features | Trust engine combining signals, with explanations |
 | Indicator/impact accounting | Not a DAM concept | Project/indicator model + evidence coverage metrics |
-| Report narrative with citations | – | Claude structured output grounded in evidence JSON |
+| Report narrative with citations | – | Gemini structured output grounded in evidence JSON |
 
 ## 9. Signature technique: "compose, then perceive"
 Because the Analyze API accepts any URI, we can **use Cloudinary transformations to construct the exact visual question** and then ask AI Vision about it:

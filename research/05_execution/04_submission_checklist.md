@@ -40,7 +40,7 @@
 
 **Recording link:** YouTube unlisted / Cloudinary-hosted video.
 
-**AI model(s) used to build:** e.g. "Claude Opus 5.5 (Claude Code) and Cursor for development; runtime: Cloudinary AI Vision/Analyze API, Cloudinary video AI, Claude Opus 5.5 (planning & report synthesis), Voyage multimodal-3.5 embeddings."
+**AI model(s) used to build:** e.g. "Cursor for development; runtime: Cloudinary AI Vision/Analyze API, Cloudinary video AI, Gemini (planning & report synthesis), Voyage multimodal-3.5 embeddings."
 
 **Ratings:** honest; add 1–2 lines of *specific* feedback in the prompts field (e.g. "The skill's side-by-side canvas-extension rule saved us hours; the Next kit's MCP template still uses /sse; Analysis MCP remote is OAuth-only which confused us at first").
 

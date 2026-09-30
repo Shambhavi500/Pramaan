@@ -41,7 +41,7 @@
 - **No sensitive attribute inference** (caste, religion, health, disability) in prompts or outputs.
 - **Bias awareness:** AI Vision may misclassify rural Indian contexts (e.g. check dams vs. walls). Mitigations: org-specific taxonomy with descriptions, claim context in prompts, reviewer overrides, and calibration on local seed data.
 - **Transparency to users:** every AI output is labeled "AI-generated analysis" with confidence and a feedback control.
-- **Prompt injection:** images/transcripts are untrusted input; Claude treats them as data; write actions require human confirmation.
+- **Prompt injection:** images/transcripts are untrusted input; Gemini treats them as data; write actions require human confirmation.
 
 ## 5. Fraud-detection ethics
 - A Trust Score is **not** an accusation. UI language: "Needs review" / "Flagged for review", not "Fake".

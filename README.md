@@ -6,7 +6,7 @@
 
 **Proof for every photo.** An evidence pipeline for field media, built on Cloudinary.
 
-`Next.js 15` · `React 19` · `Cloudinary` · `Supabase (PostGIS)` · `Claude`
+`Next.js 15` · `React 19` · `Cloudinary` · `Supabase (PostGIS)` · `Gemini`
 
 *Code Cubicle 6.0 · Cloudinary track · PS-02 "AI-Powered Impact & Sustainability Media Platform"*
 
@@ -37,8 +37,8 @@ Pramaan gives every photo a chain of custody, from the moment it is taken to the
 | **Verify** | An explainable **Trust Score** combines eight weighted signals and routes each photo to *verified*, *needs review* or *flagged*. | `lib/trust-engine.ts` |
 | **Review** | Reviewers work a moderation queue, with per-signal reasons shown for every decision. | `/review` |
 | **Compare** | Before and after photos are paired and shown with a slider. | `/compare/[pairId]` |
-| **Discover** | Plain-English search: Claude plans structured filters, Cloudinary Search runs them. | `POST /api/search` |
-| **Tell** | Claude writes a report in which every claim cites evidence IDs, packaged as a PDF. | `POST /api/stories` |
+| **Discover** | Plain-English search: Gemini plans structured filters, Cloudinary Search runs them. | `POST /api/search` |
+| **Tell** | Gemini writes a report in which every claim cites evidence IDs, packaged as a PDF. | `POST /api/stories` |
 | **Trace** | Every derivative is classified, and every event is appended to a hash-chained ledger. Anyone can inspect the lineage. | `/verify/[derivativeId]` |
 
 ## Design decisions worth knowing
@@ -74,7 +74,7 @@ Each ledger entry stores the hash of the previous entry, so editing history brea
 
 ### 5. Perception and reasoning are separated
 
-Cloudinary does the perceiving and rendering: analysis, hashing, transformations, delivery. Claude does the reasoning across assets: search planning and cited reports, both constrained by Zod schemas. Signed uploads are locked to one preset and the `pramaan/` folder tree.
+Cloudinary does the perceiving and rendering: analysis, hashing, transformations, delivery. Gemini does the reasoning across assets: search planning and cited reports, both constrained by Zod schemas. Signed uploads are locked to one preset and the `pramaan/` folder tree.
 
 ## Tech stack
 
@@ -84,11 +84,11 @@ Cloudinary does the perceiving and rendering: analysis, hashing, transformations
 | UI | Tailwind CSS 4, GSAP, Lucide, `react-compare-slider` |
 | Media | Cloudinary: `next-cloudinary`, `cloudinary` SDK, `@cloudinary/analysis` |
 | Data | Supabase Postgres with PostGIS (geofences) |
-| AI reasoning | Anthropic SDK with Zod structured outputs |
+| AI reasoning | Gemini (via LangChain) with Zod structured outputs |
 
 ## Getting started
 
-**Prerequisites:** Node 20+, a Cloudinary account, a Supabase project, an Anthropic API key.
+**Prerequisites:** Node 20+, a Cloudinary account, a Supabase project, a Gemini API key.
 
 ```bash
 npm install
@@ -127,7 +127,7 @@ Open <http://localhost:3000>.
 | `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | Server-only: signing, Admin and Analysis APIs |
 | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase client |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only database access |
-| `ANTHROPIC_API_KEY` | Search planning and story generation |
+| `GEMINI_API_KEY` | Agent investigations, search planning, story generation and embeddings |
 | `APP_BASE_URL` | Webhook target and verify-QR links |
 
 ### Scripts
@@ -155,7 +155,7 @@ Open <http://localhost:3000>.
 | `/verify/dv_8f9a2b` | Public lineage inspector (needs seed data) |
 | `POST /api/sign-upload` | Signs uploads, restricted to the evidence preset and `pramaan/` folders |
 | `POST /api/cloudinary/webhook` | Verified webhook that runs analysis and scoring |
-| `POST /api/search` | Natural-language search: Claude plans, Cloudinary executes |
+| `POST /api/search` | Natural-language search: Gemini plans, Cloudinary executes |
 | `POST /api/stories` | Cited report from verified evidence, plus PDF pack |
 | `/investigate` | Activity brief, "Generate report" with live progress, human review of held evidence, semantic search |
 | `POST /api/activities/brief` | Saves an activity brief and generates its investigation plan |

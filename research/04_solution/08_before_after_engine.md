@@ -76,7 +76,7 @@ One `ai_vision_general` call on the composite URL with schema:
   "additionalProperties": false
 }
 ```
-If `same_location ≠ yes` or `viewpoint_similarity < 50` → pair downgraded to "needs review"; optionally ask Claude for a second opinion with both images.
+If `same_location ≠ yes` or `viewpoint_similarity < 50` → pair downgraded to "needs review"; optionally ask Gemini for a second opinion with both images.
 
 ### 4.2 Deterministic metric: Excess Green (ExG) green-cover index
 A classic RGB vegetation index (Woebbecke et al., 1995) that is explainable and cheap, and needs no ML:

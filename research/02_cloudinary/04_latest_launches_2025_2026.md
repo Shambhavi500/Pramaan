@@ -56,10 +56,10 @@
 | Date | Item |
 |---|---|
 | 26 Jan 2026 → 21 May 2026 | `create-cloudinary-react` beta.1 → **1.0.0** (React + Vite + TS, `.cursorrules`, MCP config, UploadWidget) |
-| 30 Jun 2026 → 29 Jul 2026 | `create-cloudinary-next` **1.0.0-beta.4** (Next 16.2.7, React 19.2.4, next-cloudinary ^6.18.8, Tailwind 4; installs skills into `.claude/skills` / `.agents/skills`; writes `.mcp.json` / `.cursor/mcp.json`) |
+| 30 Jun 2026 → 29 Jul 2026 | `create-cloudinary-next` **1.0.0-beta.4** (Next 16.2.7, React 19.2.4, next-cloudinary ^6.18.8, Tailwind 4; installs skills into `.agents/skills`; writes `.cursor/mcp.json`) |
 | 12 Jul 2026 | MCP packages: `@cloudinary/asset-management` 0.5.9, `@cloudinary/analysis` 0.4.2, `@cloudinary/structured-metadata` 0.2.1, `@cloudinary/environment-config` 0.4.1 (also usable as typed TS SDKs) |
 | 4 May 2026 | Jen Looper's "How to Win a Hackathon" (dev.to/cloudinary) |
-| 2026 | Claude plugin (`/plugin install cloudinary@claude-plugins-official`), Cursor marketplace plugin, ChatGPT/Codex plugins, Base44 integration, n8n node |
+| 2026 | Cursor marketplace plugin, ChatGPT/Codex plugins, Base44 integration, n8n node |
 
 ## 3. The five launches worth featuring in our build
 

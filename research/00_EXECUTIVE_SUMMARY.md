@@ -34,10 +34,10 @@ The PS says "organizing and reporting field media is slow". The root cause is th
 | 3 Verify | Explainable **Evidence Trust Score** (geofence, EXIF/time, pHash reuse, recapture, claim-match, quality) → reviewer queue | "verifying / reliable" |
 | 4 Organize & Discover | 17-field **structured metadata**, map + timeline, **NL → search plan** over Cloudinary Search + PostGIS + embeddings | R1, R5 |
 | 5 Compare | Auto-paired before/after → slider, **overlay composite**, **cross-fade reel** (`fl_splice:transition`), **AI Vision on the composite**, ExG green-cover Δ | R3 |
-| 6 Tell | Story Studio: **evidence-cited** reports (Claude), **`multi`→PDF packs**, social kits (g_auto + overlays), subtitled reels, public pages | R4 |
+| 6 Tell | Story Studio: **evidence-cited** reports (Gemini), **`multi`→PDF packs**, social kits (g_auto + overlays), subtitled reels, public pages | R4 |
 | 7 Trace | Classified derivatives (transcoded/redacted/edited/AI), **hash-chained ledger**, **Verify QR** on every output, **C2PA-ready (`fl_c2pa`)**, **generative firewall** | R6 |
 
-**Architecture:** Next.js (from `create-cloudinary-next`) on Vercel · Cloudinary as the evidence engine (~25 capabilities, each mapped to a requirement) · Supabase Postgres (PostGIS + pgvector + ledger) · **Claude Opus 5.5** for cross-asset reasoning (query plans, evidence-cited reports, Copilot agent) · Voyage multimodal embeddings (since Cloudinary Visual Search is Enterprise-only).
+**Architecture:** Next.js (from `create-cloudinary-next`) on Vercel · Cloudinary as the evidence engine (~25 capabilities, each mapped to a requirement) · Supabase Postgres (PostGIS + pgvector + ledger) · **Gemini** for cross-asset reasoning (query plans, evidence-cited reports, Copilot agent) · Voyage multimodal embeddings (since Cloudinary Visual Search is Enterprise-only).
 
 ## 🏆 Why this wins
 - Hits all six PS goals, including the two most teams will skip: **verification** and **traceability**.

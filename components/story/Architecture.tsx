@@ -28,7 +28,7 @@ function Arrow({ d, label, lx, ly }: { d: string; label: string; lx: number; ly:
 export function Architecture() {
   return (
     <div className="panel overflow-x-auto p-4 sm:p-6">
-      <svg viewBox="0 0 980 400" className="min-w-[760px]" role="img" aria-label="Architecture: field and desk uploads go to Cloudinary, whose webhook feeds the Next.js trust engine, which writes to Supabase; reviewers and Claude sit on top.">
+      <svg viewBox="0 0 980 400" className="min-w-[760px]" role="img" aria-label="Architecture: field and desk uploads go to Cloudinary, whose webhook feeds the Next.js trust engine, which writes to Supabase; reviewers and Gemini sit on top.">
         <defs>
           <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10 z" className="fill-lime" />
@@ -48,7 +48,7 @@ export function Architecture() {
           title="Cloudinary"
           lines={["Upload preset + eval gate", "EXIF, pHash, faces, focus", "Backup + versioned storage", "AI Vision (JSON schema)", "Named transformations", "Moderation · metadata · Search", "PDF packs (multi)"]}
         />
-        <Box x={300} y={300} w={290} h={82} title="Claude" lines={["Search planner · story writer", "reasons over records only"]} />
+        <Box x={300} y={300} w={290} h={82} title="Gemini" lines={["Search planner · story writer", "reasons over records only"]} />
 
         <Box x={690} y={20} w={280} h={140} title="Next.js API (Node runtime)" lines={["Webhook, signature checked", "Trust engine, 8 signals", "Review server action"]} />
         <Box x={690} y={190} w={280} h={192} title="Supabase Postgres" lines={["evidence · understanding", "review · pair · story", "PostGIS: geofences", "pHash Hamming search", "hash-chained ledger"]} />

@@ -81,7 +81,7 @@
 ## G. Other technology
 - Voyage multimodal embeddings (voyage-multimodal-3.5): https://docs.voyageai.com/docs/multimodal-embeddings
 - Supabase free-tier limits (pgvector included; 7-day inactivity pause): https://aibizhub.io/articles/supabase-vector-free-tier-2026/ · https://uibakery.io/blog/supabase-pricing
-- Claude API (models, structured outputs, tool runner, caching, fallbacks): Anthropic platform docs (platform.claude.com); model IDs/pricing per Anthropic's current model table (Claude Opus 5.5 `claude-opus-5-5`: $4/$20 per MTok)
+- Gemini API (models, structured outputs, embeddings, rate limits): Google AI for Developers docs (ai.google.dev); LangChain `@langchain/google-genai` docs
 - Excess Green Index: Woebbecke, D. M., Meyer, G. E., Von Bargen, K., & Mortensen, D. A. (1995). *Color indices for weed identification under various soil, residue, and lighting conditions.* Transactions of the ASAE, 38(1).
 - Dóchas Code of Conduct on Images and Messages (ethical imagery in development communications)
 

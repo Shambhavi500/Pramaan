@@ -79,7 +79,7 @@ No official weighted rubric was published. This is a synthesis of S1–S6; weigh
 
 - [ ] Every PS goal (R1–R6) is visible in the live app within 3 clicks.
 - [ ] README has **"How we use Cloudinary"** with a table: capability → where in code → why → URL example.
-- [ ] Starter Kit used (Next.js) and it shows (repo history starts from `create-cloudinary-next`; `.claude/skills/` or `.agents/skills/` present).
+- [ ] Starter Kit used (Next.js) and it shows (repo history starts from `create-cloudinary-next`; `.agents/skills/` present).
 - [ ] Skills Pack + AI Power Start + MCP usage documented with prompts.
 - [ ] Live demo URL works in incognito; demo credentials in README; seed data loaded.
 - [ ] 2–4 min recorded walkthrough uploaded (public/unlisted link).

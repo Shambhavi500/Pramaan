@@ -137,4 +137,4 @@
 
 ## I. AI developer tooling (hackathon requirement)
 
-See `05_developer_ai_tooling.md`. Includes Starter Kits, Skills Pack (4 skills), AI Power Start prompt, remote/local MCP servers (Asset Management, Environment Config, Structured Metadata, Analysis, MediaFlows), marketplace plugins (Claude, Cursor, ChatGPT, Codex), VS Code extension, llms.txt, transformation rules, Context7.
+See `05_developer_ai_tooling.md`. Includes Starter Kits, Skills Pack (4 skills), AI Power Start prompt, remote/local MCP servers (Asset Management, Environment Config, Structured Metadata, Analysis, MediaFlows), marketplace plugins (Cursor, ChatGPT, Codex), VS Code extension, llms.txt, transformation rules, Context7.

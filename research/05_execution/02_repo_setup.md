@@ -10,13 +10,13 @@ Interactive (recommended for the screenshot):
 ```bash
 npx create-cloudinary-next
 # Project name: pramaan · Cloud name: <your_cloud> · Unsigned preset: No (we use signed)
-# AI tools: Claude Code + Cursor (+ Copilot if used) · Install deps: Yes
+# AI tools: Cursor (+ Copilot if used) · Install deps: Yes
 ```
 Headless alternative:
 ```bash
-npx create-cloudinary-next --headless --cloudName "<your_cloud>" --projectName pramaan --aiTools claude --aiTools cursor --packageManager pnpm
+npx create-cloudinary-next --headless --cloudName "<your_cloud>" --projectName pramaan --aiTools cursor --packageManager pnpm
 ```
-This creates Next 16 + next-cloudinary + Tailwind 4, `.env.local`, skills in `.claude/skills/` & `.agents/skills/`, and MCP config in `.mcp.json` / `.cursor/mcp.json`.
+This creates Next 16 + next-cloudinary + Tailwind 4, `.env.local`, skills in `.agents/skills/`, and MCP config in `.cursor/mcp.json`.
 
 ```bash
 cd pramaan && git init && git add -A && git commit -m "Scaffold from create-cloudinary-next (Cloudinary Next.js AI Starter Kit)"
@@ -28,14 +28,14 @@ npx skills add cloudinary-devs/skills
 ```
 
 ## 3. AI Power Start
-Open the project in Claude Code/Cursor and paste the **Get Started** prompt from https://cloudinary.com/documentation/ai_powerstart (canonical: `/documentation/prompts/cloudinary-get-started-prompt.md`). Approve each of the 5 stages. Then:
+Open the project in Cursor and paste the **Get Started** prompt from https://cloudinary.com/documentation/ai_powerstart (canonical: `/documentation/prompts/cloudinary-get-started-prompt.md`). Approve each of the 5 stages. Then:
 ```bash
 git add docs/cloudinary-environment.json docs/cloudinary-getting-started-preview.html && git commit -m "Run Cloudinary AI Power Start: env verified, optimization preview"
 ```
 
 ## 4. MCP servers
 
-Update `.mcp.json` (Claude Code) to use `/mcp` endpoints and add SMD + MediaFlows + local Analysis:
+Update `.cursor/mcp.json` to use `/mcp` endpoints and add SMD + MediaFlows + local Analysis:
 ```json
 {
   "mcpServers": {
@@ -53,11 +53,11 @@ Update `.mcp.json` (Claude Code) to use `/mcp` endpoints and add SMD + MediaFlow
   }
 }
 ```
-Do **not** commit real secrets. Keep a `.mcp.example.json` in git, and put the real file in `.gitignore` (or use env expansion if your client supports it). In Claude Code run `/mcp` to authenticate the OAuth servers. Alternative: `/plugin install cloudinary@claude-plugins-official`.
+Do **not** commit real secrets. Keep a `.mcp.example.json` in git, and put the real file in `.gitignore` (or use env expansion if your client supports it). Authenticate the OAuth servers from your IDE's MCP settings.
 
 ## 5. Dependencies
 ```bash
-pnpm add cloudinary @cloudinary/analysis @anthropic-ai/sdk zod @supabase/supabase-js @supabase/ssr inngest maplibre-gl react-compare-slider recharts qrcode sharp ulid idb-keyval
+pnpm add cloudinary @cloudinary/analysis @langchain/google-genai @langchain/langgraph zod @supabase/supabase-js @supabase/ssr inngest maplibre-gl react-compare-slider recharts qrcode sharp ulid idb-keyval
 pnpm add -D @serwist/next serwist vitest @playwright/test @types/qrcode
 npx shadcn@latest init
 ```
@@ -69,7 +69,7 @@ NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
 NEXT_PUBLIC_CLOUDINARY_API_KEY=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
-ANTHROPIC_API_KEY=
+GEMINI_API_KEY=
 VOYAGE_API_KEY=
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=

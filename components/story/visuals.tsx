@@ -212,7 +212,7 @@ export const SearchPlan = (
       <p className="text-xs text-muted">Someone types</p>
       <p className="font-normal">“check dams with trust above 80”</p>
     </div>
-    <Code title="Claude returns a plan (validated with Zod)">{`
+    <Code title="Gemini returns a plan (validated with Zod)">{`
 { "filters": [
     { "field": "activity",    "op": "=",  "value": "check_dam_construction" },
     { "field": "trust_score", "op": ">=", "value": "80" } ],
@@ -237,7 +237,7 @@ export const StoryReport = (
       </div>
     </div>
     <ul className="space-y-1.5 text-xs text-soft">
-      <li>· Only verified evidence is sent to Claude.</li>
+      <li>· Only verified evidence is sent to Gemini.</li>
       <li>· Citations that are not in the bundle are removed by the server.</li>
       <li>· Citation coverage is stored with the story.</li>
     </ul>
